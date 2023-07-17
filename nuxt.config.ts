@@ -3,8 +3,7 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
     'nuxt-gtag',
-    '@nuxtjs/tailwindcss',
+    '@nuxtjs/tailwindcss'
   ],
-  
-  gtag: { id: 'G-QKF4WH7SYY' },
+  gtag: { id: 'G-QKF4WH7SYY' }
 })

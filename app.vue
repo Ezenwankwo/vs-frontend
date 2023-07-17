@@ -8,9 +8,9 @@
   </div> -->
   <div>
     <div height="800px" width="1200px">
-    <iframe
-        allowtransparency="true"
+      <iframe
         id="waitlist_iframe"
+        allowtransparency="true"
         frameborder="0"
         marginheight="0"
         marginwidth="0"
@@ -18,26 +18,24 @@
         height="800px"
         src="https://getwaitlist.com/waitlist/8879"
         style="border-radius: 8px;"
-    >
-    </iframe>
-  </div>
-  <component is="script" async>
-    const url = new URL(window.location.href);
-    const ref_id = url.searchParams.get('ref_id');
-    if (ref_id) {
-        document.getElementById("waitlist_iframe").src += `?ref_id=${ref_id}`;
-    }
-  </component>
-
+      />
+    </div>
+    <component :is="'script'" async>
+      const url = new URL(window.location.href);
+      const ref_id = url.searchParams.get('ref_id');
+      if (ref_id) {
+      document.getElementById("waitlist_iframe").src += `?ref_id=${ref_id}`;
+      }
+    </component>
   </div>
 </template>
 
-
 <style>
 @media (max-width: 767px) {
-    /* Styles for mobile devices */
-    .centered-div {
-      width: 100%;
-    }
+
+  /* Styles for mobile devices */
+  .centered-div {
+    width: 100%;
   }
+}
 </style>
