@@ -17,22 +17,19 @@
         width="1200px"
         height="800px"
         src="https://getwaitlist.com/waitlist/8879"
-        style="border-radius: 8px;"
+        style="border-radius: 8px"
       />
     </div>
     <component :is="'script'" async>
-      const url = new URL(window.location.href);
-      const ref_id = url.searchParams.get('ref_id');
-      if (ref_id) {
-      document.getElementById("waitlist_iframe").src += `?ref_id=${ref_id}`;
-      }
+      const url = new URL(window.location.href); const ref_id =
+      url.searchParams.get('ref_id'); if (ref_id) {
+      document.getElementById("waitlist_iframe").src += `?ref_id=${ref_id}`; }
     </component>
   </div>
 </template>
 
 <style>
 @media (max-width: 767px) {
-
   /* Styles for mobile devices */
   .centered-div {
     width: 100%;
