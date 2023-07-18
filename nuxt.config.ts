@@ -18,6 +18,12 @@ export default defineNuxtConfig({
         /* module options */
       },
     ],
+    [
+      '@nuxtjs/device',
+      {
+        refreshOnResize: true,
+      },
+    ],
   ],
   gtag: { id: 'G-QKF4WH7SYY' },
 })
