@@ -37,5 +37,6 @@ export default defineNuxtConfig({
     'nuxt-headlessui',
     'nuxt-security',
     ['@dargmuesli/nuxt-cookie-control', {}],
+    'dayjs-nuxt',
   ],
 })

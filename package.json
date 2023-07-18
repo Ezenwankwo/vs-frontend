@@ -22,6 +22,7 @@
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
     "@types/node": "^18.16.19",
+    "dayjs-nuxt": "^1.1.2",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
     "nuxt": "^3.6.3",
