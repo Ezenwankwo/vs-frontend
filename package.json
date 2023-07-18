@@ -25,6 +25,7 @@
     "eslint-config-prettier": "^8.8.0",
     "nuxt": "^3.6.2",
     "nuxt-gtag": "^0.5.7",
+    "nuxt-icon": "^0.4.2",
     "prettier": "3.0.0"
   },
   "dependencies": {
