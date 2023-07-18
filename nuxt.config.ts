@@ -35,5 +35,6 @@ export default defineNuxtConfig({
     'nuxt-simple-sitemap',
     '@formkit/nuxt',
     'nuxt-headlessui',
+    'nuxt-security',
   ],
 })

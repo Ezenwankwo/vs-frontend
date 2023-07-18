@@ -27,6 +27,7 @@
     "nuxt-gtag": "^0.5.7",
     "nuxt-headlessui": "^1.1.4",
     "nuxt-icon": "^0.4.2",
+    "nuxt-security": "^0.14.1",
     "nuxt-simple-sitemap": "^3.0.11",
     "prettier": "3.0.0"
   },
