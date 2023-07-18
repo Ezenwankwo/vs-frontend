@@ -22,5 +22,14 @@ export default defineNuxtConfig({
     ['@nuxtjs/robots', {}],
     ['@nuxt/image', {}],
     '@nuxtjs/color-mode',
+    [
+      '@nuxtjs/google-fonts',
+      {
+        families: {
+          Lora: true,
+          'Open+Sans': true,
+        },
+      },
+    ],
   ],
 })
