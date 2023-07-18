@@ -36,5 +36,6 @@ export default defineNuxtConfig({
     '@formkit/nuxt',
     'nuxt-headlessui',
     'nuxt-security',
+    ['@dargmuesli/nuxt-cookie-control', {}],
   ],
 })
