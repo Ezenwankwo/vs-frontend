@@ -21,5 +21,6 @@ export default defineNuxtConfig({
     ],
     ['@nuxtjs/robots', {}],
     ['@nuxt/image', {}],
+    '@nuxtjs/color-mode',
   ],
 })
