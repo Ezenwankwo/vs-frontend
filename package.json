@@ -23,9 +23,10 @@
     "@types/node": "^18.16.19",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
-    "nuxt": "^3.6.2",
+    "nuxt": "^3.6.3",
     "nuxt-gtag": "^0.5.7",
     "nuxt-icon": "^0.4.2",
+    "nuxt-simple-sitemap": "^3.0.11",
     "prettier": "3.0.0"
   },
   "dependencies": {
