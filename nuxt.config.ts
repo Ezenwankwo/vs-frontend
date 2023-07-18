@@ -24,6 +24,12 @@ export default defineNuxtConfig({
         refreshOnResize: true,
       },
     ],
+    [
+      '@nuxtjs/robots',
+      {
+        /* module options */
+      },
+    ],
   ],
   gtag: { id: 'G-QKF4WH7SYY' },
 })
