@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
-    'nuxt-gtag',
+    ['nuxt-gtag', { id: 'G-QKF4WH7SYY' }],
     '@nuxtjs/tailwindcss',
     ['@nuxtjs/eslint-module', { lintOnStart: false }],
     [
@@ -12,24 +12,14 @@ export default defineNuxtConfig({
       },
     ],
     '@pinia-plugin-persistedstate/nuxt',
-    [
-      '@nuxtjs/i18n',
-      {
-        /* module options */
-      },
-    ],
+    ['@nuxtjs/i18n', {}],
     [
       '@nuxtjs/device',
       {
         refreshOnResize: true,
       },
     ],
-    [
-      '@nuxtjs/robots',
-      {
-        /* module options */
-      },
-    ],
+    ['@nuxtjs/robots', {}],
+    ['@nuxt/image', {}],
   ],
-  gtag: { id: 'G-QKF4WH7SYY' },
 })
