@@ -12,6 +12,12 @@ export default defineNuxtConfig({
       },
     ],
     '@pinia-plugin-persistedstate/nuxt',
+    [
+      '@nuxtjs/i18n',
+      {
+        /* module options */
+      },
+    ],
   ],
   gtag: { id: 'G-QKF4WH7SYY' },
 })
