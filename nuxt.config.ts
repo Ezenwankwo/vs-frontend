@@ -5,13 +5,6 @@ export default defineNuxtConfig({
     ['nuxt-gtag', { id: 'G-QKF4WH7SYY' }],
     '@nuxtjs/tailwindcss',
     ['@nuxtjs/eslint-module', { lintOnStart: false }],
-    [
-      '@pinia/nuxt',
-      {
-        autoImports: ['defineStore', 'acceptHMRUpdate'],
-      },
-    ],
-    '@pinia-plugin-persistedstate/nuxt',
     ['@nuxtjs/i18n', {}],
     [
       '@nuxtjs/device',

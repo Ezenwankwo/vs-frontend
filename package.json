@@ -20,7 +20,6 @@
     "@nuxtjs/google-fonts": "^3.0.1",
     "@nuxtjs/i18n": "^8.0.0-beta.13",
     "@nuxtjs/tailwindcss": "^6.8.0",
-    "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
     "@types/node": "^18.16.19",
     "dayjs-nuxt": "^1.1.2",
     "eslint": "^8.45.0",
@@ -35,11 +34,6 @@
   "dependencies": {
     "@formkit/nuxt": "^0.17.4",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
-    "@nuxtjs/robots": "^3.0.0",
-    "@pinia/nuxt": "^0.4.11",
-    "pinia": "^2.1.4"
-  },
-  "overrides": {
-    "vue": "latest"
+    "@nuxtjs/robots": "^3.0.0"
   }
 }
