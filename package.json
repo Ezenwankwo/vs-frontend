@@ -21,6 +21,7 @@
     "@nuxtjs/i18n": "^8.0.0-beta.13",
     "@nuxtjs/tailwindcss": "^6.8.0",
     "@types/node": "^18.16.19",
+    "daisyui": "^4.0.4",
     "dayjs-nuxt": "^1.1.2",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
