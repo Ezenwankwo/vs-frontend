@@ -2,8 +2,8 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
+    '@nuxt/ui',
     ['nuxt-gtag', { id: 'G-QKF4WH7SYY' }],
-    '@nuxtjs/tailwindcss',
     ['@nuxtjs/eslint-module', { lintOnStart: false }],
     ['@nuxtjs/i18n', {}],
     [
@@ -14,19 +14,16 @@ export default defineNuxtConfig({
     ],
     ['@nuxtjs/robots', {}],
     ['@nuxt/image', {}],
-    '@nuxtjs/color-mode',
     [
       '@nuxtjs/google-fonts',
       {
         families: {
-          Lora: true,
-          'Open+Sans': true,
+          'Nanum+Gothic': true,
+          Lato: true,
+          Inter: true,
         },
       },
     ],
-    'nuxt-icon',
-    '@formkit/nuxt',
-    'nuxt-headlessui',
     'nuxt-security',
     ['@dargmuesli/nuxt-cookie-control', {}],
     'dayjs-nuxt',
