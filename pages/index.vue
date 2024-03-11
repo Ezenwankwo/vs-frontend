@@ -1,8 +1,12 @@
 <template>
   <div>
-    <DefaultHeader />
-    <HeroSection />
-    <ApartmentTypes />
+    <LandingHeader />
+    <LandingHero />
+    <LandingApartmentTypes />
+    <LandingHowItWorks />
+    <LandingFaq />
+    <LandingProperties />
+    <LandingFooter />
   </div>
 </template>
 
