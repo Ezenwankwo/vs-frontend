@@ -10,13 +10,13 @@
     >
       Explore our options
     </p>
-    <div class="flex justify-between mt-20 gap-8">
+    <div class="flex flex-col md:flex-row justify-between mt-20 gap-8">
       <ULink
         v-for="apartment in apartmentTypes"
         :key="apartment.name"
         :to="apartment.href"
         :class="apartment.image"
-        class="relative w-1/3 bg-cover h-96 rounded-xl shadow"
+        class="relative md:w-1/3 bg-cover h-96 rounded-xl shadow"
       >
         <div class="absolute bottom-5 bg-gray-500/80 mx-5 p-5 rounded">
           <h3

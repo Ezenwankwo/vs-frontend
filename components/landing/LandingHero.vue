@@ -1,16 +1,15 @@
 <template>
-  <div class="h-screen pt-28">
+  <div class="md:h-screen pt-28 pb-12 md:pb-0">
     <UContainer>
       <h1
         class="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl"
       >
-        Tired of apartment <br />hunting headaches?
+        Easily find and rent <br class="hidden md:block" />apartments in
+        Nigeria.
       </h1>
       <p class="mt-6 text-lg text-gray-600 dark:text-gray-300">
-        Easily find and rent from the largest database of verified apartments.
-        <br />
-        We connect you directly to the landlords and property managers, cutting
-        out <br />
+        We connect you directly to the property owners and managers, cutting out
+        <br class="hidden md:block" />
         unnecessary middle men, cost and time wasting.
       </p>
       <UInput
@@ -36,7 +35,7 @@
           </UButton>
         </template>
       </UInput>
-      <div class="static">
+      <div class="static hidden md:block">
         <img
           src="~/assets/images/houses.svg"
           class="absolute bottom-0 right-0"

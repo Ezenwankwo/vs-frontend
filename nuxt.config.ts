@@ -18,8 +18,6 @@ export default defineNuxtConfig({
       '@nuxtjs/google-fonts',
       {
         families: {
-          'Nanum+Gothic': true,
-          Lato: true,
           Inter: true,
         },
       },

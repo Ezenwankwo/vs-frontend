@@ -5,12 +5,12 @@
     >
       Explore our properties
     </h2>
-    <div class="flex justify-between mt-20 gap-8">
+    <div class="flex flex-col md:flex-row justify-between mt-20 gap-8">
       <ULink
         v-for="listing in sampleListings"
         :key="listing.name"
         :to="listing.href"
-        class="border rounded-xl w-1/3 shadow"
+        class="border rounded-xl md:w-1/3 shadow"
       >
         <div class="flex">
           <img

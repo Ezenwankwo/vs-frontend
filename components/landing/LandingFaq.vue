@@ -45,7 +45,7 @@
             vacant space while they also find their dream space.`,
         },
       ]"
-      class="mt-20 px-20"
+      class="mt-20 md:px-20"
     />
   </UContainer>
 </template>

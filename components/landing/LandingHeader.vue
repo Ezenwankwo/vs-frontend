@@ -47,7 +47,7 @@
             variant="outline"
             to="/"
             color="primary"
-            class="rounded-full hidden lg:flex px-6 py-3"
+            class="rounded-full lg:flex px-6 py-3"
           >
             <template #trailing>
               <UIcon name="i-heroicons-arrow-right-20-solid" />

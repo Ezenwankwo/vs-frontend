@@ -1,10 +1,10 @@
 <template>
   <div class="bg-gray-950">
     <UContainer class="pt-16">
-      <div class="flex mb-8">
-        <div class="w-2/4">
-          <img src="~/assets/images/logo.svg" class="w-1/5" alt="logo" />
-          <p class="text-white/70 my-4 w-3/5">
+      <div class="flex flex-col md:flex-row mb-8">
+        <div class="md:w-2/4">
+          <img src="~/assets/images/logo.svg" class="md:w-1/5" alt="logo" />
+          <p class="text-white/70 my-4 md:w-3/5">
             Vacant Soon is an innovative apartment rental platform that aimed at
             providing renters with seamless and efficient rental experience.
           </p>
@@ -16,7 +16,7 @@
             <span><Icon name="jam:whatsapp" /></span>
           </div>
         </div>
-        <div class="w-1/4 flex flex-col justify-center">
+        <div class="md:w-1/4 flex flex-col justify-center mb-8 md:mb-0">
           <h4 class="text-white/80 text-xl font-semibold">Explore</h4>
           <ul class="text-white/70 space-y-4 mt-8">
             <li>Find a space</li>
@@ -25,7 +25,7 @@
             <li>Terms of use</li>
           </ul>
         </div>
-        <div class="w-1/4 flex flex-col justify-center">
+        <div class="md:w-1/4 flex flex-col justify-center">
           <h4 class="text-white/80 text-xl font-semibold">Get in Touch</h4>
           <ul class="text-white/70 space-y-4 mt-8">
             <li>
