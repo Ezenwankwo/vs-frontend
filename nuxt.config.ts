@@ -19,6 +19,7 @@ export default defineNuxtConfig({
       {
         families: {
           Inter: true,
+          Lato: true,
         },
       },
     ],

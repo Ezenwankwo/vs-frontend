@@ -1,7 +1,7 @@
 <template>
   <UContainer class="py-24">
     <h2
-      class="text-3xl font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
+      class="text-3xl font-['Lato'] font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
     >
       Explore our properties
     </h2>
@@ -24,7 +24,7 @@
           >
         </div>
         <div class="flex flex-col p-5">
-          <h4 class="font-semibold text-lg text-primary-700">
+          <h4 class="font-['Lato'] font-semibold text-lg text-primary-700">
             {{ listing.name }}
           </h4>
           <span class="font-light">{{ listing.location }}</span>

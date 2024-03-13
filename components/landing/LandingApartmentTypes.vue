@@ -1,13 +1,11 @@
 <template>
   <UContainer class="py-24">
     <h2
-      class="text-3xl font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
+      class="text-3xl font-['Lato'] font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
     >
       Apartments for every need
     </h2>
-    <p
-      class="mt-6 text-xl text-center tracking-tight text-gray-600 dark:text-gray-300"
-    >
+    <p class="mt-6 text-xl text-center text-gray-600 dark:text-gray-300">
       Explore our options
     </p>
     <div class="flex flex-col md:flex-row justify-between mt-20 gap-8">
@@ -20,7 +18,7 @@
       >
         <div class="absolute bottom-5 bg-gray-500/80 mx-5 p-5 rounded">
           <h3
-            class="text-2xl font-semibold text-white dark:text-white sm:text-3xl"
+            class="text-2xl font-['Lato'] font-semibold text-white dark:text-white sm:text-3xl"
           >
             {{ apartment.name }}
           </h3>

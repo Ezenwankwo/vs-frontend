@@ -17,7 +17,9 @@
           </div>
         </div>
         <div class="md:w-1/4 flex flex-col justify-center mb-8 md:mb-0">
-          <h4 class="text-white/80 text-xl font-semibold">Explore</h4>
+          <h4 class="text-white/80 text-xl font-['Lato'] font-semibold">
+            Explore
+          </h4>
           <ul class="text-white/70 space-y-4 mt-8">
             <li>Find a space</li>
             <li>List a space</li>
@@ -26,7 +28,9 @@
           </ul>
         </div>
         <div class="md:w-1/4 flex flex-col justify-center">
-          <h4 class="text-white/80 text-xl font-semibold">Get in Touch</h4>
+          <h4 class="text-white/80 text-xl font-['Lato'] font-semibold">
+            Get in Touch
+          </h4>
           <ul class="text-white/70 space-y-4 mt-8">
             <li>
               <Icon name="material-symbols:mail-outline" class="mr-2" />

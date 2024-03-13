@@ -1,13 +1,11 @@
 <template>
   <UContainer class="py-24">
     <h2
-      class="text-3xl text-center font-bold tracking-tight text-gray-700 dark:text-white sm:text-5xl"
+      class="text-3xl font-['Lato'] text-center font-bold tracking-tight text-gray-700 dark:text-white sm:text-5xl"
     >
       You should know how it works
     </h2>
-    <p
-      class="mt-6 text-xl text-center tracking-tight text-gray-600 dark:text-gray-300"
-    >
+    <p class="mt-6 text-xl text-center text-gray-600 dark:text-gray-300">
       The process is seamless
     </p>
     <div
@@ -25,7 +23,7 @@
             >{{ step.id }}</span
           >
           <h3
-            class="text-2xl ml-5 my-auto font-semibold text-gray-700 dark:text-white sm:text-3xl"
+            class="text-2xl font-['Lato'] ml-5 my-auto font-semibold text-gray-700 dark:text-white sm:text-3xl"
           >
             {{ step.name }}
           </h3>

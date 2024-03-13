@@ -2,7 +2,7 @@
   <div class="md:h-screen pt-28 pb-12 md:pb-0">
     <UContainer>
       <h1
-        class="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl"
+        class="text-5xl font-['Lato'] font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl"
       >
         Easily find and rent <br class="hidden md:block" />apartments in
         Nigeria.
@@ -30,7 +30,15 @@
             variant="solid"
             size="xl"
             color="primary"
-            class="rounded-full px-6 py-3"
+            class="hidden md:block rounded-full px-6 py-3"
+          >
+          </UButton>
+          <UButton
+            label="Find"
+            variant="solid"
+            size="xl"
+            color="primary"
+            class="md:hidden rounded-full px-6 py-3"
           >
           </UButton>
         </template>
