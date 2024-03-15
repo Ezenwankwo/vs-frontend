@@ -1,5 +1,5 @@
 <template>
-  <div class="md:h-screen pt-28 pb-12 md:pb-0">
+  <div data-aos="fade-up" class="md:h-screen pt-28 pb-12 md:pb-0">
     <UContainer>
       <h1
         class="text-5xl font-['Lato'] font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl"
@@ -15,30 +15,22 @@
       <UInput
         padded
         autofocus
-        placeholder="Lokogoma, Abuja"
+        placeholder="Where would you like to live?"
         size="xl"
         color="gray"
         :ui="{
           rounded: 'rounded-full',
           padding: { xl: 'px-6 py-6' },
         }"
-        class="max-w-2xl mt-12 p-0 shadow-lg rounded-full"
+        class="max-w-xl mt-12 p-0 shadow-lg rounded-full"
       >
         <template #trailing>
-          <UButton
-            label="Find a place"
-            variant="solid"
-            size="xl"
-            color="primary"
-            class="hidden md:block rounded-full px-6 py-3"
-          >
-          </UButton>
           <UButton
             label="Find"
             variant="solid"
             size="xl"
             color="primary"
-            class="md:hidden rounded-full px-6 py-3"
+            class="rounded-full px-6 py-3"
           >
           </UButton>
         </template>

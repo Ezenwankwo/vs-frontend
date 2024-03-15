@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="py-24">
+  <UContainer data-aos="fade-up" class="py-24">
     <h2
       class="text-3xl font-['Lato'] text-center font-bold tracking-tight text-gray-700 dark:text-white sm:text-5xl"
     >

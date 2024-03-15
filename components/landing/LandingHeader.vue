@@ -1,5 +1,8 @@
 <template>
-  <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50 shadow">
+  <header
+    data-aos="fade-up"
+    class="backdrop-blur py-1 -mb-px sticky top-0 z-50 shadow"
+  >
     <UContainer>
       <div class="mx-auto flex items-center justify-between gap-3">
         <div class="lg:flex-1 flex items-center gap-1.5">
@@ -45,7 +48,8 @@
           <UButton
             label="List properties"
             variant="outline"
-            to="/"
+            size="xl"
+            to="/auth/login"
             color="primary"
             class="rounded-full lg:flex px-6 py-3"
           >

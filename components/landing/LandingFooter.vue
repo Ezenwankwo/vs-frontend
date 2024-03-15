@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-950">
+  <div data-aos="fade-up" class="bg-primary-950/100 text-sm">
     <UContainer class="pt-16">
       <div class="flex flex-col md:flex-row mb-8">
         <div class="md:w-2/4">
@@ -17,7 +17,7 @@
           </div>
         </div>
         <div class="md:w-1/4 flex flex-col justify-center mb-8 md:mb-0">
-          <h4 class="text-white/80 text-xl font-['Lato'] font-semibold">
+          <h4 class="text-white/80 text-lg font-['Lato'] font-semibold">
             Explore
           </h4>
           <ul class="text-white/70 space-y-4 mt-8">
@@ -28,7 +28,7 @@
           </ul>
         </div>
         <div class="md:w-1/4 flex flex-col justify-center">
-          <h4 class="text-white/80 text-xl font-['Lato'] font-semibold">
+          <h4 class="text-white/80 text-lg font-['Lato'] font-semibold">
             Get in Touch
           </h4>
           <ul class="text-white/70 space-y-4 mt-8">
@@ -47,7 +47,7 @@
         </div>
       </div>
       <hr />
-      <div class="flex justify-center items-center text-lg text-white h-24">
+      <div class="flex justify-center items-center text-white h-24">
         <p class="text-white/70">© 2024 Vacant Soon.</p>
       </div>
     </UContainer>

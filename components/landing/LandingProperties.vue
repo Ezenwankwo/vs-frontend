@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="py-24">
+  <UContainer data-aos="fade-up" class="py-24">
     <h2
       class="text-3xl font-['Lato'] font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
     >
@@ -34,7 +34,7 @@
     <UButton
       label="Explore more properties"
       variant="outline"
-      color="gray"
+      color="primary"
       class="mt-10 rounded-full px-6 py-3"
     >
       <template #trailing>
