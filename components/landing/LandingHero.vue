@@ -28,7 +28,6 @@
           <UButton
             label="Find"
             variant="solid"
-            size="xl"
             color="primary"
             class="rounded-full px-6 py-3"
           >

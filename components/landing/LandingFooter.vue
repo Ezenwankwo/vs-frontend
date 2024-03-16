@@ -1,5 +1,5 @@
 <template>
-  <div data-aos="fade-up" class="bg-primary-950/100 text-sm">
+  <div class="bg-gray-950/100 text-sm">
     <UContainer class="pt-16">
       <div class="flex flex-col md:flex-row mb-8">
         <div class="md:w-2/4">
