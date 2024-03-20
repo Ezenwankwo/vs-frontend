@@ -26,6 +26,5 @@ export default defineNuxtConfig({
     'nuxt-security',
     ['@dargmuesli/nuxt-cookie-control', {}],
     'dayjs-nuxt',
-    'nuxt-aos',
   ],
 })

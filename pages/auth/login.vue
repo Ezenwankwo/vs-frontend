@@ -13,11 +13,11 @@
             <template #header>
               <div class="flex justify-between items-center">
                 <div>
-                  <p
-                    class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
+                  <h3
+                    class="text-base font-['Lato'] font-semibold leading-6 text-gray-900 dark:text-white"
                   >
                     {{ item.content }}
-                  </p>
+                  </h3>
 
                   <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
                     {{ createAccountStepText }}
@@ -72,7 +72,9 @@
                   }"
                   class="mb-4"
                 />
-                <span class="text-sm text-primary-500">Resend token</span>
+                <span class="text-sm text-primary-500" @click="onResendToken"
+                  >Resend token</span
+                >
               </UFormGroup>
             </div>
             <div v-if="createAccountStep === 3">
@@ -140,44 +142,133 @@
         <template #signin="{ item }">
           <UCard @submit.prevent="onSubmitSignIn">
             <template #header>
-              <h3
-                class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
-              >
-                {{ item.content }}
-              </h3>
-              <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                Sign in to your account
-              </p>
-            </template>
+              <div class="flex justify-between items-center">
+                <div>
+                  <h3
+                    class="text-base font-['Lato'] font-semibold leading-6 text-gray-900 dark:text-white"
+                  >
+                    {{ item.content }}
+                  </h3>
 
-            <UFormGroup label="Email" name="email" class="mb-3">
-              <UInput
-                v-model="signInForm.email"
-                type="email"
-                required
-                padded
-                size="xl"
-                color="gray"
-                :ui="{
-                  rounded: 'rounded-full',
-                }"
-              />
-            </UFormGroup>
-            <UFormGroup label="Password" name="password" class="flex flex-col">
-              <UInput
-                v-model="signInForm.password"
-                type="password"
-                required
-                padded
-                size="xl"
-                color="gray"
-                :ui="{
-                  rounded: 'rounded-full',
-                }"
-                class="mb-4"
-              />
-              <span class="text-sm text-primary-500">Forgot password?</span>
-            </UFormGroup>
+                  <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    {{ resetPasswordStepText }}
+                  </p>
+                </div>
+                <span
+                  v-if="resetPasswordStep > 0"
+                  class="text-base font-semibold p-3 rounded-full bg-primary-100 dark:text-gray-700"
+                  >{{ resetPasswordStep }}/3</span
+                >
+              </div>
+            </template>
+            <div v-if="resetPasswordStep === 0">
+              <UFormGroup label="Email" name="email" class="mb-3">
+                <UInput
+                  v-model="signInForm.email"
+                  type="email"
+                  required
+                  padded
+                  size="xl"
+                  color="gray"
+                  :ui="{
+                    rounded: 'rounded-full',
+                  }"
+                />
+              </UFormGroup>
+              <UFormGroup
+                label="Password"
+                name="password"
+                class="flex flex-col"
+              >
+                <UInput
+                  v-model="signInForm.password"
+                  type="password"
+                  required
+                  padded
+                  size="xl"
+                  color="gray"
+                  :ui="{
+                    rounded: 'rounded-full',
+                  }"
+                  class="mb-4"
+                />
+                <span class="text-sm text-primary-500" @click="onForgotPassword"
+                  >Forgot password?</span
+                >
+              </UFormGroup>
+            </div>
+            <div v-if="resetPasswordStep === 1">
+              <UFormGroup label="Email" name="email" class="mb-3">
+                <UInput
+                  v-model="forgotPasswordForm.email"
+                  type="email"
+                  required
+                  padded
+                  size="xl"
+                  color="gray"
+                  :ui="{
+                    rounded: 'rounded-full',
+                  }"
+                  class="mb-4"
+                />
+                <span class="text-sm text-primary-500" @click="onBackToSignIn"
+                  >Back to sign in</span
+                >
+              </UFormGroup>
+            </div>
+            <div v-if="resetPasswordStep === 2">
+              <UFormGroup label="token" name="token" class="mb-3">
+                <UInput
+                  v-model="verifyEmailForm.token"
+                  type="text"
+                  maxlength="6"
+                  required
+                  padded
+                  size="xl"
+                  color="gray"
+                  :ui="{
+                    rounded: 'rounded-full',
+                  }"
+                  class="mb-4"
+                />
+                <span class="text-sm text-primary-500" @click="onResendToken"
+                  >Resend token</span
+                >
+              </UFormGroup>
+            </div>
+            <div v-if="resetPasswordStep === 3">
+              <UFormGroup label="Password" name="password" class="mb-3">
+                <UInput
+                  v-model="resetPasswordForm.password"
+                  type="password"
+                  required
+                  padded
+                  size="xl"
+                  color="gray"
+                  :ui="{
+                    rounded: 'rounded-full',
+                  }"
+                />
+              </UFormGroup>
+              <UFormGroup
+                label="Confirm password"
+                name="confirmPassword"
+                class="flex flex-col"
+              >
+                <UInput
+                  v-model="resetPasswordForm.confirmPassword"
+                  type="password"
+                  required
+                  padded
+                  size="xl"
+                  color="gray"
+                  :ui="{
+                    rounded: 'rounded-full',
+                  }"
+                  class="mb-4"
+                />
+              </UFormGroup>
+            </div>
 
             <template #footer>
               <UButton
@@ -185,7 +276,7 @@
                 color="primary"
                 class="rounded-full px-6 py-3"
               >
-                Sign in
+                {{ resetPasswordButton }}
               </UButton>
             </template>
           </UCard>
@@ -222,6 +313,29 @@ const createAccountSteps = [
   },
 ]
 
+const resetPasswordSteps = [
+  {
+    id: 0,
+    content: 'Welcome Back',
+    text: 'Signin to your account',
+  },
+  {
+    id: 1,
+    content: 'Forgot Password',
+    text: 'Enter your email to reset password',
+  },
+  {
+    id: 2,
+    content: 'Verify Email',
+    text: 'Enter the 6 digit token sent to your email',
+  },
+  {
+    id: 3,
+    content: 'Reset Password',
+    text: 'Enter new password',
+  },
+]
+
 const items = [
   {
     slot: 'create',
@@ -231,7 +345,7 @@ const items = [
   {
     slot: 'signin',
     label: 'Sign In',
-    content: 'Welcome Back',
+    content: resetPasswordSteps[0].content,
   },
 ]
 
@@ -239,6 +353,8 @@ const createAccountForm = reactive({ email: '', password: '' })
 const verifyEmailForm = reactive({ token: '' })
 const profileForm = reactive({ name: '', phone: '', ownership: '' })
 const signInForm = reactive({ email: '', password: '' })
+const forgotPasswordForm = reactive({ email: '' })
+const resetPasswordForm = reactive({ password: '', confirmPassword: '' })
 
 function onSubmitCreate() {
   if (createAccountForm.email && createAccountForm.password) {
@@ -255,7 +371,57 @@ function onSubmitCreate() {
   }
 }
 
+const resetPasswordStep = ref(0)
+const resetPasswordStepText = ref('Signin to your account')
+const resetPasswordButton = ref('Sign In')
+
 function onSubmitSignIn() {
-  //   console.log('Submitted form:', passwordForm)
+  if (signInForm.email && signInForm.password) {
+    // login user
+  }
+  if (forgotPasswordForm.email) {
+    // forgot password
+    resetPasswordStep.value = 2
+    items[1].content = resetPasswordSteps[2].content
+    resetPasswordStepText.value = resetPasswordSteps[2].text
+    resetPasswordButton.value = 'Submit'
+  }
+  if (verifyEmailForm.token) {
+    // verify email
+    resetPasswordStep.value = 3
+    items[1].content = resetPasswordSteps[3].content
+    resetPasswordStepText.value = resetPasswordSteps[3].text
+    resetPasswordButton.value = 'Submit'
+  }
+  if (resetPasswordForm.password && resetPasswordForm.confirmPassword) {
+    // reset password
+    resetPasswordStep.value = 0
+    items[1].content = resetPasswordSteps[0].content
+    resetPasswordStepText.value = resetPasswordSteps[0].text
+    resetPasswordButton.value = 'Sign In'
+  }
+}
+
+function onForgotPassword() {
+  resetPasswordStep.value = 1
+  items[1].content = resetPasswordSteps[1].content
+  resetPasswordStepText.value = resetPasswordSteps[1].text
+  resetPasswordButton.value = 'Submit'
+}
+
+function onBackToSignIn() {
+  resetPasswordStep.value = 0
+  items[1].content = resetPasswordSteps[0].content
+  resetPasswordStepText.value = resetPasswordSteps[0].text
+  resetPasswordButton.value = 'Sign In'
+}
+
+const toast = useToast()
+function onResendToken() {
+  // resend token
+  toast.add({
+    title: 'Token sent.',
+    description: "We've sent a new token to your email.",
+  })
 }
 </script>

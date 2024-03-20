@@ -1,5 +1,5 @@
 <template>
-  <div data-aos="fade-up" class="md:h-screen pt-28 pb-12 md:pb-0">
+  <div class="md:h-screen pt-28 pb-12 md:pb-0">
     <UContainer>
       <h1
         class="text-5xl font-['Lato'] font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl"
