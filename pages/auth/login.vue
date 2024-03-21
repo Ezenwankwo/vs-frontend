@@ -46,7 +46,7 @@
               <UFormGroup label="Password" name="password">
                 <UInput
                   v-model="createAccountForm.password"
-                  type="password"
+                  :type="showPassword ? 'text' : 'password'"
                   padded
                   required
                   size="xl"
@@ -54,11 +54,21 @@
                   :ui="{
                     rounded: 'rounded-full',
                   }"
-                />
+                >
+                  <template #trailing>
+                    <span
+                      class="text-gray-500 cursor-pointer dark:text-gray-400"
+                      @click="showPassword = !showPassword"
+                      ><Icon v-if="showPassword" name="heroicons:eye" /><Icon
+                        v-else
+                        name="heroicons:eye-slash"
+                    /></span>
+                  </template>
+                </UInput>
               </UFormGroup>
             </div>
             <div v-if="createAccountStep === 2">
-              <UFormGroup label="token" name="token" class="mb-3">
+              <UFormGroup label="Token" name="token" class="mb-3">
                 <UInput
                   v-model="verifyEmailForm.token"
                   type="text"
@@ -217,7 +227,7 @@
               </UFormGroup>
             </div>
             <div v-if="resetPasswordStep === 2">
-              <UFormGroup label="token" name="token" class="mb-3">
+              <UFormGroup label="Token" name="token" class="mb-3">
                 <UInput
                   v-model="verifyEmailForm.token"
                   type="text"
@@ -292,6 +302,10 @@ definePageMeta({
   layout: 'default',
 })
 
+const toast = useToast()
+
+const showPassword = ref(false)
+
 const createAccountStep = ref(1)
 const createAccountStepText = ref('Let’s get you on board, super easy.')
 const createAccountButton = ref('Create Account')
@@ -304,12 +318,12 @@ const createAccountSteps = [
   {
     id: 2,
     content: 'Verify Email',
-    text: 'Enter the 6 digit token sent to your email.',
+    text: 'Enter the token sent to your email.',
   },
   {
     id: 3,
     content: 'Create Profile',
-    text: 'Provide your basic details to get started.',
+    text: 'Provide your basic details.',
   },
 ]
 
@@ -327,7 +341,7 @@ const resetPasswordSteps = [
   {
     id: 2,
     content: 'Verify Email',
-    text: 'Enter the 6 digit token sent to your email',
+    text: 'Enter the token sent to your email',
   },
   {
     id: 3,
@@ -399,6 +413,10 @@ function onSubmitSignIn() {
     items[1].content = resetPasswordSteps[0].content
     resetPasswordStepText.value = resetPasswordSteps[0].text
     resetPasswordButton.value = 'Sign In'
+    toast.add({
+      title: 'Password reset done.',
+      description: 'You can now login with your new password.',
+    })
   }
 }
 
@@ -416,7 +434,6 @@ function onBackToSignIn() {
   resetPasswordButton.value = 'Sign In'
 }
 
-const toast = useToast()
 function onResendToken() {
   // resend token
   toast.add({
