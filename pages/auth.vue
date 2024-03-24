@@ -2,11 +2,7 @@
   <div>
     <LandingHeader />
     <UContainer class="py-12 sm">
-      <h4
-        class="text-2xl font-['Lato'] text-center font-bold tracking-tight text-gray-700 dark:text-white sm:text-3xl"
-      >
-        Advertise and manage your apartments
-      </h4>
+      <SharedSectionTitle text="Advertise and manage your apartments" />
       <UTabs :items="items" class="md:w-2/3 mt-12 mx-auto">
         <template #create="{ item }">
           <UCard @submit.prevent="onSubmitCreate">

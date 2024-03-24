@@ -1,10 +1,6 @@
 <template>
   <UContainer class="py-24">
-    <h2
-      class="text-3xl font-['Lato'] text-center font-bold tracking-tight text-gray-700 dark:text-white sm:text-5xl"
-    >
-      You should know how it works
-    </h2>
+    <SharedSectionTitle text="You should know how it works" />
     <p class="mt-6 text-xl text-center text-gray-600 dark:text-gray-300">
       The process is seamless
     </p>

@@ -1,10 +1,6 @@
 <template>
   <UContainer class="py-24">
-    <h2
-      class="text-3xl font-['Lato'] font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
-    >
-      Explore our properties
-    </h2>
+    <SharedSectionTitle text="Explore our properties" />
     <div class="flex flex-col md:flex-row justify-between mt-20 gap-8">
       <ULink
         v-for="listing in sampleListings"

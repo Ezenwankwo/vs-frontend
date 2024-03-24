@@ -1,10 +1,6 @@
 <template>
   <UContainer class="py-24">
-    <h2
-      class="text-3xl font-['Lato'] font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
-    >
-      Apartments for every need
-    </h2>
+    <SharedSectionTitle text="Apartments for every need" />
     <p class="mt-6 text-xl text-center text-gray-600 dark:text-gray-300">
       Explore our options
     </p>

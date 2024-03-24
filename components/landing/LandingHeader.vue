@@ -46,7 +46,7 @@
             v-if="!route.path.includes('auth')"
             label="List properties"
             variant="outline"
-            to="/auth/login"
+            to="/auth"
             color="primary"
             class="rounded-full lg:flex px-6 py-3"
           >
