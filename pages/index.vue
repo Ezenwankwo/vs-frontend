@@ -5,7 +5,7 @@
     <LandingApartmentTypes />
     <LandingHowItWorks />
     <LandingFaq />
-    <LandingProperties />
+    <LandingApartments />
     <LandingFooter />
   </div>
 </template>

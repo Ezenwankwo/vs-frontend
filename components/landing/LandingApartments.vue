@@ -1,7 +1,7 @@
 <template>
   <UContainer class="py-24">
     <SharedSectionTitle text="Explore our properties" />
-    <div class="flex flex-col md:flex-row justify-between mt-20 gap-8">
+    <div class="flex flex-col md:flex-row mt-20 gap-8">
       <ULink
         v-for="listing in sampleListings"
         :key="listing.name"
