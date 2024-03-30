@@ -21,7 +21,6 @@
         size="xl"
         color="gray"
         :ui="{
-          rounded: 'rounded-full',
           padding: { xl: 'px-6 py-6' },
         }"
         class="max-w-xl mt-12 p-0 shadow-lg rounded-full"

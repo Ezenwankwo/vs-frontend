@@ -34,9 +34,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                 />
               </UFormGroup>
               <UFormGroup label="Password" name="password">
@@ -47,9 +44,6 @@
                   required
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                 >
                   <template #trailing>
                     <span
@@ -73,9 +67,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
                 <span class="text-sm text-primary-500" @click="onResendToken"
@@ -92,9 +83,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
               </UFormGroup>
@@ -106,9 +94,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
               </UFormGroup>
@@ -125,20 +110,13 @@
                   size="xl"
                   color="gray"
                   :options="['Property Owner', 'Property Manager']"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
               </UFormGroup>
             </div>
 
             <template #footer>
-              <UButton
-                type="submit"
-                color="primary"
-                class="rounded-full px-6 py-3"
-              >
+              <UButton type="submit" color="primary" class="px-6 py-3">
                 {{ createAccountButton }}
               </UButton>
             </template>
@@ -162,7 +140,7 @@
                 </div>
                 <span
                   v-if="resetPasswordStep > 0"
-                  class="text-base font-semibold p-3 rounded-full bg-primary-100 dark:text-gray-700"
+                  class="text-base font-semibold p-3 bg-primary-100 dark:text-gray-700"
                   >{{ resetPasswordStep }}/3</span
                 >
               </div>
@@ -176,9 +154,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                 />
               </UFormGroup>
               <UFormGroup
@@ -193,9 +168,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
                 <span class="text-sm text-primary-500" @click="onForgotPassword"
@@ -212,9 +184,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
                 <span class="text-sm text-primary-500" @click="onBackToSignIn"
@@ -232,9 +201,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
                 <span class="text-sm text-primary-500" @click="onResendToken"
@@ -251,9 +217,6 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                 />
               </UFormGroup>
               <UFormGroup
@@ -268,20 +231,13 @@
                   padded
                   size="xl"
                   color="gray"
-                  :ui="{
-                    rounded: 'rounded-full',
-                  }"
                   class="mb-4"
                 />
               </UFormGroup>
             </div>
 
             <template #footer>
-              <UButton
-                type="submit"
-                color="primary"
-                class="rounded-full px-6 py-3"
-              >
+              <UButton type="submit" color="primary" class="px-6 py-3">
                 {{ resetPasswordButton }}
               </UButton>
             </template>

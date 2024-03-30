@@ -7,7 +7,7 @@
       class="border rounded-xl md:w-1/3 shadow"
     >
       <div class="flex">
-        <img
+        <NuxtImg
           :src="listing.image"
           class="object-cover rounded-t-xl h-72 w-full"
           alt="apartment listing"

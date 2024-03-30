@@ -9,21 +9,18 @@
         placeholder="Where do you want to live?"
         size="xl"
         color="gray"
-        :ui="{ rounded: 'rounded-full' }"
         class="w-4/12"
       />
       <USelectMenu
         v-model="propertyType"
         size="xl"
         :options="propertyTypeList"
-        :ui="{ rounded: 'rounded-full' }"
         class="w-2/12"
       />
       <USelectMenu
         v-model="maxPrice"
         size="xl"
         :options="maxPriceList"
-        :ui="{ rounded: 'rounded-full' }"
         class="w-2/12"
       />
       <USelectMenu
@@ -52,23 +49,20 @@
         placeholder="Where do you want to live?"
         size="xl"
         color="gray"
-        :ui="{ rounded: 'rounded-full' }"
         class="w-full"
       />
-      <div class="flex space-x-1">
+      <div class="flex justify-between space-x-1">
         <USelectMenu
           v-model="propertyType"
           size="xl"
+          class="w-2/5"
           :options="propertyTypeList"
-          :ui="{ rounded: 'rounded-full' }"
-          class="w-1/3"
         />
         <USelectMenu
           v-model="maxPrice"
           size="xl"
+          class="w-2/5"
           :options="maxPriceList"
-          :ui="{ rounded: 'rounded-full' }"
-          class="w-1/3"
         />
         <!-- <USelectMenu
         v-model="numRooms"
@@ -78,12 +72,9 @@
         class="w-1/3"
       /> -->
         <UButton
-          label="Filters"
-          trailing
           icon="i-heroicons-adjustments-horizontal"
           variant="soft"
-          color="gray"
-          class="rounded-full justify-center w-1/3"
+          class="justify-center w-1/5"
           @click="isOpen = true"
         />
       </div>

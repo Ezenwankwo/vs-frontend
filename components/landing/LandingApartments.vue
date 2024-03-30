@@ -9,7 +9,7 @@
         class="border rounded-xl md:w-1/3 shadow"
       >
         <div class="flex">
-          <img
+          <NuxtImg
             :src="listing.image"
             class="object-cover rounded-t-xl h-72 w-full"
             alt="apartment listing"
@@ -29,9 +29,10 @@
     </div>
     <UButton
       label="Explore more properties"
+      to="/apartments"
       variant="outline"
       color="primary"
-      class="mt-10 rounded-full px-6 py-3"
+      class="mt-10 px-6 py-3"
     >
       <template #trailing>
         <UIcon name="i-heroicons-arrow-right-20-solid" />
