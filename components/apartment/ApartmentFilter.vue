@@ -40,7 +40,7 @@
         @click="isOpen = true"
       />
     </div>
-    <div class="md:hidden flex flex-col space-y-2">
+    <div class="lg:hidden flex flex-col space-y-2">
       <UInput
         v-model="q"
         trailing
