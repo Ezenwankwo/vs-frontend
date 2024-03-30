@@ -22,7 +22,7 @@
     "dayjs-nuxt": "^1.1.2",
     "eslint": "^8.45.0",
     "eslint-config-prettier": "^8.8.0",
-    "nuxt": "^3.10.3",
+    "nuxt": "^3.11.1",
     "nuxt-gtag": "^0.5.7",
     "nuxt-security": "^0.14.1",
     "prettier": "3.0.0"
