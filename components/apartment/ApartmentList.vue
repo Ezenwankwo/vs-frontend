@@ -4,21 +4,20 @@
       v-for="listing in sampleListings"
       :key="listing.name"
       :to="listing.href"
-      class="border rounded-xl md:w-1/3 shadow"
+      class="border md:w-1/3 shadow"
     >
       <div class="flex">
         <NuxtImg
           :src="listing.image"
-          class="object-cover rounded-t-xl h-72 w-full"
+          class="object-cover h-72 w-full"
           alt="apartment listing"
         />
-        <span
-          class="absolute p-4 m-2 font-semibold bg-gray-500/70 text-white rounded"
+        <span class="absolute p-4 m-2 font-semibold bg-gray-500/70 text-white"
           ><span>&#8358;</span> {{ listing.price }}</span
         >
       </div>
       <div class="flex flex-col p-5">
-        <h4 class="font-['Lato'] font-semibold text-lg text-primary-700">
+        <h4 class="font-['Lato'] font-semibold text-lg text-primary">
           {{ listing.name }}
         </h4>
         <span class="font-light">{{ listing.location }}</span>

@@ -1,5 +1,5 @@
 <template>
-  <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50 shadow">
+  <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50">
     <UContainer>
       <div class="mx-auto flex items-center justify-between gap-3">
         <div class="lg:flex-1 flex items-center gap-1.5">
