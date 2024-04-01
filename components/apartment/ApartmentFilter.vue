@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="bg-gray-400/50 py-6 lg:py-4 lg:mt-6 shadow">
+  <UContainer class="bg-gray-400/50 py-6 lg:py-4 lg:mt-6 rounded-md shadow">
     <div class="hidden lg:flex space-x-2">
       <UInput
         v-model="q"
@@ -94,7 +94,7 @@
             <USelectMenu
               v-model="filter.propertyType"
               size="xl"
-              placeholder="Property Type"
+              placeholder="Type"
               :options="propertyTypeList"
               class="flex-initial w-1/2"
             />
@@ -126,14 +126,14 @@
             <USelectMenu
               v-model="filter.numRooms"
               size="xl"
-              placeholder="No Rooms"
+              placeholder="Bedrooms"
               :options="numRoomsList"
               class="w-1/2"
             />
             <USelectMenu
               v-model="filter.numBathrooms"
               size="xl"
-              placeholder="No Bathrooms"
+              placeholder="Bathrooms"
               :options="numBathroomsList"
               class="w-1/2"
             />
@@ -142,7 +142,7 @@
             <USelectMenu
               v-model="filter.rentPayment"
               size="xl"
-              placeholder="Rent Payment"
+              placeholder="Payment"
               :options="rentPaymentList"
               class="w-1/2"
             />

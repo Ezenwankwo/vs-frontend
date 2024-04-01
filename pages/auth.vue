@@ -1,6 +1,5 @@
 <template>
   <div>
-    <LandingHeader />
     <UContainer class="py-12 sm">
       <SharedSectionTitle text="Advertise and manage your apartments" />
       <UTabs :items="items" class="md:w-2/3 mt-12 mx-auto">
@@ -245,7 +244,6 @@
         </template>
       </UTabs>
     </UContainer>
-    <LandingFooter />
   </div>
 </template>
 

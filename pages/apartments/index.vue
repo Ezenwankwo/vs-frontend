@@ -1,6 +1,5 @@
 <template>
   <div>
-    <LandingHeader />
     <ApartmentFilter />
     <ApartmentList />
     <UPagination
