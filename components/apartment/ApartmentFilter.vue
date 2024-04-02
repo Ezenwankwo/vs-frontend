@@ -55,7 +55,7 @@
         <USelectMenu
           v-model="filter.propertyType"
           size="xl"
-          placeholder="Property Type"
+          placeholder="Type"
           class="w-2/5"
           :options="propertyTypeList"
         />

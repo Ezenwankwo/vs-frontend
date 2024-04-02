@@ -30,7 +30,6 @@
                   v-model="createAccountForm.email"
                   type="email"
                   required
-                  padded
                   size="xl"
                   color="gray"
                 />
@@ -39,7 +38,6 @@
                 <UInput
                   v-model="createAccountForm.password"
                   :type="showPassword ? 'text' : 'password'"
-                  padded
                   required
                   size="xl"
                   color="gray"
@@ -60,10 +58,9 @@
               <UFormGroup label="Token" name="token" class="mb-3">
                 <UInput
                   v-model="verifyEmailForm.token"
-                  type="text"
+                  type="number"
                   maxlength="6"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   class="mb-4"
@@ -79,7 +76,6 @@
                   v-model="profileForm.name"
                   type="text"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   class="mb-4"
@@ -90,7 +86,6 @@
                   v-model="profileForm.phone"
                   type="text"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   class="mb-4"
@@ -105,7 +100,6 @@
                   v-model="profileForm.ownership"
                   type="text"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   :options="['Property Owner', 'Property Manager']"
@@ -139,7 +133,7 @@
                 </div>
                 <span
                   v-if="resetPasswordStep > 0"
-                  class="text-base font-semibold p-3 bg-primary-100 dark:text-gray-700"
+                  class="text-base font-semibold p-3 bg-primary-100 rounded-full dark:text-gray-700"
                   >{{ resetPasswordStep }}/3</span
                 >
               </div>
@@ -150,7 +144,6 @@
                   v-model="signInForm.email"
                   type="email"
                   required
-                  padded
                   size="xl"
                   color="gray"
                 />
@@ -164,12 +157,13 @@
                   v-model="signInForm.password"
                   type="password"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   class="mb-4"
                 />
-                <span class="text-sm text-primary-500" @click="onForgotPassword"
+                <span
+                  class="text-sm text-primary-500 cursor-pointer"
+                  @click="onForgotPassword"
                   >Forgot password?</span
                 >
               </UFormGroup>
@@ -180,12 +174,13 @@
                   v-model="forgotPasswordForm.email"
                   type="email"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   class="mb-4"
                 />
-                <span class="text-sm text-primary-500" @click="onBackToSignIn"
+                <span
+                  class="text-sm text-primary-500 cursor-pointer"
+                  @click="onBackToSignIn"
                   >Back to sign in</span
                 >
               </UFormGroup>
@@ -194,10 +189,9 @@
               <UFormGroup label="Token" name="token" class="mb-3">
                 <UInput
                   v-model="verifyEmailForm.token"
-                  type="text"
+                  type="number"
                   maxlength="6"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   class="mb-4"
@@ -213,7 +207,6 @@
                   v-model="resetPasswordForm.password"
                   type="password"
                   required
-                  padded
                   size="xl"
                   color="gray"
                 />
@@ -227,7 +220,6 @@
                   v-model="resetPasswordForm.confirmPassword"
                   type="password"
                   required
-                  padded
                   size="xl"
                   color="gray"
                   class="mb-4"
@@ -248,10 +240,6 @@
 </template>
 
 <script setup lang="ts">
-definePageMeta({
-  layout: 'default',
-})
-
 const toast = useToast()
 
 const showPassword = ref(false)

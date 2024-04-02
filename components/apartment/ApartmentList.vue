@@ -3,7 +3,7 @@
     <ULink
       v-for="listing in sampleListings"
       :key="listing.name"
-      :to="listing.href"
+      :to="`/apartments/${listing.slug}/`"
       class="border md:w-1/3 shadow rounded-md"
     >
       <div class="flex">
@@ -11,7 +11,7 @@
         <UCarousel
           v-if="listing.media_type === 'image'"
           v-slot="{ item }"
-          :items="listing.media"
+          :items="listing.image"
           :ui="{ item: 'basis-full' }"
           indicators
         >
@@ -24,7 +24,7 @@
         <!-- for video -->
         <video
           v-else
-          :src="listing.media"
+          :src="listing.video"
           controls
           controlslist="nodownload"
           preload="metadata"
@@ -49,27 +49,30 @@
 const sampleListings = [
   {
     name: 'Studio Apartment in Karu',
-    media: ['/shortlet.png', '/office.png', '/shortlet.png'],
+    image: ['/shortlet.png', '/office.png', '/shortlet.png'],
+    video: '',
     media_type: 'image',
     price: '2,000,000',
     location: '10 Mayne Avenue, Calabar',
-    href: '#',
+    slug: 'studio-apartment-in-karu',
   },
   {
     name: '2 Bedroom Block of Flats',
-    media: '/video.mp4',
+    image: [],
+    video: '/video.mp4',
     media_type: 'video',
     price: '800,000',
     location: '13 Liberty Street, Benin City',
-    href: '#',
+    slug: '2-bedroom-block-of-flats',
   },
   {
     name: 'Studio Apartment in Karu',
-    media: ['/office.png', '/shortlet.png'],
+    image: ['/office.png', '/shortlet.png'],
+    video: '',
     media_type: 'image',
     price: '1,200,000',
     location: '17 Nsikak-Edet Crescent, Sunshine Homes, Lokogoma',
-    href: '#',
+    slug: 'studio-apartment-in-karu',
   },
 ]
 </script>
