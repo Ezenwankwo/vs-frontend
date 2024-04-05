@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: false },
   modules: [
     '@nuxt/ui',
     '@vite-pwa/nuxt',
@@ -28,4 +28,9 @@ export default defineNuxtConfig({
     ['@dargmuesli/nuxt-cookie-control', {}],
     'dayjs-nuxt',
   ],
+  runtimeConfig: {
+    public: {
+      GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    },
+  },
 })

@@ -12,36 +12,21 @@
         <br class="hidden md:block" />
         unnecessary middle men, cost and time wasting.
       </p>
-      <UInput
-        v-model="q"
-        name="q"
-        padded
+      <UInputMenu
+        v-model="selected"
+        :loading="loading"
+        :search="search"
+        option-attribute="shortFormattedAddress"
         autofocus
-        placeholder="Where would you like to live?"
+        trailing
+        placeholder="Search by location..."
         size="xl"
         color="gray"
         :ui="{
           padding: { xl: 'px-6 py-6' },
         }"
         class="max-w-xl mt-12 p-0 shadow-lg rounded-full"
-        @change="onSearch"
-      >
-        <template #trailing>
-          <UButton
-            v-if="q !== ''"
-            loading
-            icon="i-heroicons-magnifying-glass-20-solid"
-            color="primary"
-            class="rounded-full"
-          />
-          <UButton
-            v-else
-            icon="i-heroicons-magnifying-glass-20-solid"
-            color="primary"
-            class="rounded-full"
-          />
-        </template>
-      </UInput>
+      />
       <div class="static hidden md:block">
         <img
           src="~/assets/images/houses.svg"
@@ -54,9 +39,39 @@
 </template>
 
 <script setup lang="ts">
-const q = ref('')
-function onSearch() {
-  console.log(q.value)
-  navigateTo('/apartments')
+type Place = {
+  formattedAddress: string
+}
+type Places = {
+  [key: string]: Place[]
+}
+const selected = ref()
+const loading = ref(false)
+const runtimeConfig = useRuntimeConfig()
+const apiKey = runtimeConfig.public.GOOGLE_API_KEY
+
+async function search(q: string) {
+  loading.value = true
+
+  const searchText = q || 'Abuja' // use Abuja for initial search query
+  const result: Places = await $fetch(
+    'https://places.googleapis.com/v1/places:searchText',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': apiKey,
+        'X-Goog-FieldMask': 'places.shortFormattedAddress',
+      },
+      body: {
+        textQuery: searchText,
+        maxResultCount: 5,
+      },
+    },
+  )
+  loading.value = false
+  console.log(result.places)
+  return result.places
+  // navigateTo('/apartments')
 }
 </script>
