@@ -1,14 +1,15 @@
 <template>
   <UContainer class="bg-gray-400/50 py-6 lg:py-4 lg:mt-6 rounded-md shadow">
     <div class="hidden lg:flex space-x-2">
-      <UInput
-        v-model="q"
+      <UInputMenu
+        v-model="location"
+        :loading="loading"
+        :search="search"
         trailing
-        icon="i-heroicons-magnifying-glass-20-solid"
-        name="q"
-        placeholder="Where do you want to live?"
+        placeholder="Search by location..."
         size="xl"
         class="w-4/12"
+        @change="onSelect(location)"
       />
       <USelectMenu
         v-model="filter.propertyType"
@@ -41,15 +42,15 @@
       />
     </div>
     <div class="lg:hidden flex flex-col space-y-2">
-      <UInput
-        v-model="q"
+      <UInputMenu
+        v-model="location"
+        :loading="loading"
+        :search="search"
         trailing
-        icon="i-heroicons-magnifying-glass-20-solid"
-        name="q"
-        placeholder="Where do you want to live?"
+        placeholder="Search by location..."
         size="xl"
-        color="gray"
         class="w-full"
+        @change="onSelect(location)"
       />
       <div class="flex space-x-1">
         <USelectMenu
@@ -171,6 +172,51 @@
 </template>
 
 <script setup lang="ts">
+interface PredictionResponse {
+  suggestions: {
+    placePrediction: {
+      text: {
+        text: string
+      }
+    }
+  }[]
+}
+
+const route = useRoute()
+const location = ref(route.query.location) || ''
+const loading = ref(false)
+const runtimeConfig = useRuntimeConfig()
+const apiKey = runtimeConfig.public.GOOGLE_API_KEY
+
+async function search(q: string) {
+  loading.value = true
+
+  const searchText = q || location.value // use Abuja for initial search query
+  const result: PredictionResponse = await $fetch(
+    'https://places.googleapis.com/v1/places:autocomplete',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': apiKey,
+      },
+      body: {
+        input: searchText,
+        includedRegionCodes: ['NG'],
+      },
+    },
+  )
+  loading.value = false
+  const textValues = result.suggestions
+    .map((item) => item.placePrediction.text.text)
+    .map((place) => place.replace(/, Nigeria$/, ''))
+  return textValues
+}
+
+function onSelect(item: any) {
+  navigateTo(`/apartments/?location=${item}`)
+}
+
 const propertyTypeList = ['Residential', 'Commercial', 'Shortlet']
 const priceList = [
   '200,000',
@@ -204,7 +250,6 @@ const rentPaymentList = ['Monthly', 'Quarterly', 'Yearly']
 const petPolicyList = ['Yes', 'No']
 
 const isOpen = ref(false)
-const q = ref('')
 
 const filter = reactive({
   propertyType: '',

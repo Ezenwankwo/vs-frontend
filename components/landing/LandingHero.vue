@@ -16,16 +16,15 @@
         v-model="selected"
         :loading="loading"
         :search="search"
-        option-attribute="shortFormattedAddress"
         autofocus
         trailing
         placeholder="Search by location..."
         size="xl"
-        color="gray"
         :ui="{
           padding: { xl: 'px-6 py-6' },
         }"
         class="max-w-xl mt-12 p-0 shadow-lg rounded-full"
+        @change="onSelect(selected)"
       />
       <div class="static hidden md:block">
         <img
@@ -39,12 +38,16 @@
 </template>
 
 <script setup lang="ts">
-type Place = {
-  formattedAddress: string
+interface PredictionResponse {
+  suggestions: {
+    placePrediction: {
+      text: {
+        text: string
+      }
+    }
+  }[]
 }
-type Places = {
-  [key: string]: Place[]
-}
+
 const selected = ref()
 const loading = ref(false)
 const runtimeConfig = useRuntimeConfig()
@@ -54,24 +57,28 @@ async function search(q: string) {
   loading.value = true
 
   const searchText = q || 'Abuja' // use Abuja for initial search query
-  const result: Places = await $fetch(
-    'https://places.googleapis.com/v1/places:searchText',
+  const result: PredictionResponse = await $fetch(
+    'https://places.googleapis.com/v1/places:autocomplete',
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'places.shortFormattedAddress',
       },
       body: {
-        textQuery: searchText,
-        maxResultCount: 5,
+        input: searchText,
+        includedRegionCodes: ['NG'],
       },
     },
   )
   loading.value = false
-  console.log(result.places)
-  return result.places
-  // navigateTo('/apartments')
+  const textValues = result.suggestions
+    .map((item) => item.placePrediction.text.text)
+    .map((place) => place.replace(/, Nigeria$/, ''))
+  return textValues
+}
+
+function onSelect(item: string) {
+  navigateTo(`/apartments/?location=${item}`)
 }
 </script>
