@@ -1,5 +1,5 @@
 <template>
-  <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50">
+  <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50 shadow">
     <UContainer>
       <div class="mx-auto flex items-center justify-between gap-3">
         <div class="lg:flex-1 flex items-center gap-1.5">
@@ -12,7 +12,7 @@
             <img src="~/assets/images/logo.svg" alt="logo" />
           </a>
         </div>
-        <!-- <ul
+        <ul
           class="items-center ring-1 ring-gray-200 dark:ring-gray-800 px-3 gap-x-0 rounded-full hidden lg:flex"
         >
           <li v-for="item in navItems" :key="item.name" class="relative">
@@ -24,7 +24,7 @@
               {{ item.name }}
             </ULink>
           </li>
-        </ul> -->
+        </ul>
         <div class="flex items-center justify-end lg:flex-1 gap-1.5">
           <ClientOnly>
             <UButton
@@ -61,12 +61,10 @@
 </template>
 
 <script setup lang="ts">
-// const navItems = [
-//   { name: 'Home', href: '/' },
-//   { name: 'How it works', href: '/how-it-works' },
-//   { name: 'FAQ', href: 'faq' },
-//   { name: 'Explore properties', href: 'browse' },
-// ]
+const navItems = [
+  { name: 'Explore properties', href: '/apartments' },
+  { name: 'Blog', href: '/blogs' },
+]
 
 // Color mode
 const colorMode = useColorMode()

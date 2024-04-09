@@ -39,7 +39,7 @@
         <h4 class="font-['Lato'] font-semibold text-lg text-primary">
           {{ listing.name }}
         </h4>
-        <span class="font-light">{{ listing.location }}</span>
+        <span>{{ listing.location }}</span>
       </div>
     </ULink>
   </UContainer>
