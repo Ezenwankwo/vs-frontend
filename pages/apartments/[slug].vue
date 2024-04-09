@@ -4,30 +4,36 @@
     <div class="flex flex-col lg:flex-row lg:space-x-4">
       <UTabs :items="items" class="lg:w-2/3" @change="onTabChange">
         <template #apartment="{ item }">
-          <UCard>
-            <NuxtImg
-              src="/shortlet.png"
-              class="object-cover h-96 rounded-md w-full"
-            />
-
+          <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }">
+            <UCarousel
+              v-if="apartment.media_type === 'image'"
+              v-slot="{ item }"
+              :items="apartment.image"
+              :ui="{ item: 'basis-full' }"
+              indicators
+            >
+              <NuxtImg
+                :src="item"
+                class="object-cover h-72 lg:h-96 w-full rounded-t-md"
+                draggable="false"
+              />
+            </UCarousel>
             <template #footer>
               <h3 class="font-['Lato'] font-semibold text-xl text-primary">
                 {{ item.content }}
               </h3>
               <p class="mt-2">
-                Multiple units of well-furnished 2-bedroom Studio apartments,
-                fitted to the highest specifications for those who like it
-                minimalistic and simple.
+                {{ apartment.description }}
               </p>
             </template>
           </UCard>
         </template>
 
         <template #location="{ item }">
-          <UCard>
+          <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }">
             <NuxtImg
               src="/map.png"
-              class="object-cover h-96 rounded-md w-full"
+              class="object-cover h-72 lg:h-96 rounded-t-md w-full"
             />
 
             <template #footer>
@@ -35,9 +41,7 @@
                 {{ item.content }}
               </h3>
               <p class="mt-2 font-light">
-                Multiple units of well-furnished 2-bedroom Studio apartments,
-                fitted to the highest specifications for those who like it
-                minimalistic and simple.
+                {{ apartment.description }}
               </p>
             </template>
           </UCard>
@@ -56,47 +60,59 @@
                   name="fluent-emoji-high-contrast:bed"
                   class="mr-1 text-primary"
                 />
-                Bedrooms: 2
+                Bedrooms: {{ apartment.amenities.Bedrooms }}
               </li>
               <li>
                 <Icon name="fa-solid:bath" class="mr-1 text-primary" />
-                Bathrooms: 2
+                Bathrooms: {{ apartment.amenities.Bathrooms }}
               </li>
             </ul>
           </div>
           <div class="mt-8">
             <h4 class="font-['Lato'] font-semibold text-gray">
-              Rent Breakdown (&#x20A6;)
+              Price Breakdown (&#x20A6;)
             </h4>
             <table class="border-collapse table-auto w-full text-sm mt-1">
               <tbody>
                 <tr>
                   <td class="border-b border-gray-100 p-1 pl-0">Rent</td>
-                  <td class="border-b border-gray-100 p-1">2,000,000</td>
+                  <td class="border-b border-gray-100 p-1">
+                    {{ apartment.price.rent }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="border-b border-gray-100 p-1 pl-0">
                     Service Charge
                   </td>
-                  <td class="border-b border-gray-100 p-1">300,000</td>
+                  <td class="border-b border-gray-100 p-1">
+                    {{ apartment.price.service_charge }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="border-b border-gray-100 p-1 pl-0">
                     Caution Deposit
                   </td>
-                  <td class="border-b border-gray-100 p-1">100,000</td>
+                  <td class="border-b border-gray-100 p-1">
+                    {{ apartment.price.caution_deposit }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="border-b border-gray-100 p-1 pl-0">Legal</td>
-                  <td class="border-b border-gray-100 p-1">200,000</td>
+                  <td class="border-b border-gray-100 p-1">
+                    {{ apartment.price.legal }}
+                  </td>
                 </tr>
                 <tr>
                   <td class="border-b border-gray-100 p-1 pl-0">Agency</td>
-                  <td class="border-b border-gray-100 p-1">100,000</td>
+                  <td class="border-b border-gray-100 p-1">
+                    {{ apartment.price.agency }}
+                  </td>
                 </tr>
                 <tr class="text-primary">
                   <td class="border-b border-gray-100 p-1 pl-0">Total</td>
-                  <td class="border-b border-gray-100 p-1">2,700,000</td>
+                  <td class="border-b border-gray-100 p-1">
+                    {{ apartment.price.total }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -130,19 +146,12 @@
           <div>
             <h4 class="font-['Lato'] font-semibold text-gray">Address</h4>
             <p class="mt-1">
-              17 Nsikak-Edet Crescent, Sunshine Homes, Lokogoma, Abuja
+              {{ apartment.location }}
             </p>
           </div>
           <div class="mt-8">
             <h4 class="font-['Lato'] font-semibold text-gray">Neigboorhood</h4>
-            <p class="mt-1">
-              Multiple units of well-furnished 2-bedroom Studio apartments,
-              fitted to the highest specifications for those who like it
-              minimalistic and simple. Comes with a neighbourhood supermarket,
-              power supply and weekly cleaning services amongst other standard
-              amenities. Located in a serene gated community, with quick access
-              to Abuja Central.
-            </p>
+            <p class="mt-1"></p>
           </div>
         </div>
         <UButton
@@ -155,7 +164,7 @@
           label="Contact Owner"
           size="xl"
           color="primary"
-          class="lg:hidden fixed bottom-2 left-2 right-2 flex justify-center mt-4"
+          class="lg:hidden fixed bottom-0 left-0 right-0 flex rounded-none justify-center mt-4"
         />
       </div>
     </div>
@@ -163,8 +172,6 @@
 </template>
 
 <script setup lang="ts">
-// const { slug } = useRoute().params
-
 const tabLabel = ref('Apartment Details')
 function onTabChange(index: number) {
   const item = items[index]
@@ -172,11 +179,6 @@ function onTabChange(index: number) {
     ? (tabLabel.value = 'Apartment Details')
     : (tabLabel.value = 'Location Details')
 }
-
-const breadCrumbLinks = [
-  { label: 'Apartments', to: '/apartments' },
-  { label: 'Breadcrumb' },
-]
 
 const items = [
   {
@@ -190,4 +192,39 @@ const items = [
     content: '2 Bedroom Apartment in Karu',
   },
 ]
+
+const breadCrumbLinks = [
+  { label: 'Apartments', to: '/apartments' },
+  { label: 'Breadcrumb' },
+]
+
+const apartment = {
+  name: '2 Bedroom Apartment in Karu',
+  image: ['/shortlet.png', '/office.png', '/shortlet.png'],
+  video: '',
+  media_type: 'image',
+  price: {
+    rent: '2,000,000',
+    service_charge: '300,000',
+    caution_deposit: '100,000',
+    legal: '200,000',
+    agency: '100,000',
+    total: '2,700,000',
+  },
+  slug: 'studio-apartment-in-karu',
+  description: `Multiple units of well-furnished 2-bedroom Studio apartments,
+        fitted to the highest specifications for those who like it minimalistic and simple.`,
+  rules: [
+    'No parties or loud music',
+    'No pets except cats',
+    'No latenights',
+    'No illegal activities',
+  ],
+  location: '17 Nsikak-Edet Crescent, Sunshine Homes, Lokogoma',
+  neighborhood: `Multiple units of well-furnished 2-bedroom Studio apartments, fitted to the highest 
+        specifications for those who like it minimalistic and simple. Comes with a neighbourhood supermarket,
+        power supply and weekly cleaning services amongst other standard amenities. Located in a 
+        serene gated community, with quick access to Abuja Central.`,
+  amenities: { Bedrooms: 2, Bathrooms: 2 },
+}
 </script>
