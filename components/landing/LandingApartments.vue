@@ -1,6 +1,7 @@
 <template>
   <UContainer class="py-24">
-    <SharedSectionTitle text="Explore our properties" />
+    <SharedSectionTitle v-if="path === '/'" text="Explore our apartments" />
+    <SharedSectionTitle v-else text="Similar apartments" />
     <div class="flex flex-col md:flex-row mt-20 gap-8">
       <ULink
         v-for="listing in sampleListings"
@@ -60,6 +61,9 @@
 </template>
 
 <script setup lang="ts">
+const route = useRoute()
+const path = route.path
+
 const sampleListings = [
   {
     name: 'Studio Apartment in Karu',

@@ -191,7 +191,7 @@ const apiKey = runtimeConfig.public.GOOGLE_API_KEY
 async function search(q: string) {
   loading.value = true
 
-  const searchText = q || location.value // use Abuja for initial search query
+  const searchText = q || location.value || 'Abuja' // use Abuja for initial search query
   const result: PredictionResponse = await $fetch(
     'https://places.googleapis.com/v1/places:autocomplete',
     {
