@@ -1,7 +1,7 @@
 <template>
   <div>
     <UContainer class="py-12 sm">
-      <SharedSectionTitle text="Advertise and manage your apartments" />
+      <SharedSectionTitle text="Cut agency fees, expand your options" />
       <UTabs :items="items" class="md:w-2/3 mt-12 mx-auto">
         <template #create="{ item }">
           <UCard @submit.prevent="onSubmitCreate">

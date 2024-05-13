@@ -44,15 +44,12 @@
           </ClientOnly>
           <UButton
             v-if="!route.path.includes('auth')"
-            label="List properties"
+            label="Login"
             variant="outline"
             to="/auth"
             color="primary"
             class="lg:flex px-6 py-3"
           >
-            <template #trailing>
-              <UIcon name="i-heroicons-arrow-right-20-solid" />
-            </template>
           </UButton>
         </div>
       </div>

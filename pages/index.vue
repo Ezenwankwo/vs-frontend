@@ -1,10 +1,8 @@
 <template>
   <div>
     <LandingHero />
-    <LandingApartmentTypes />
     <LandingHowItWorks />
     <LandingFaq />
-    <LandingApartments />
   </div>
 </template>
 

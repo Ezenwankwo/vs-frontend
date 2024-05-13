@@ -37,33 +37,32 @@
 const rentSteps = [
   {
     id: '01',
-    name: 'Search & choose',
-    description: `Search for your ideal apartment with ease. 
-			We provide detailed apartment and neighbourhood descriptions that will
-			guide you in making the perfect choice.`,
-    image: '/search.svg',
+    name: 'List your apartment',
+    description: `List your vacant or soon-to-be-vacant apartment.
+            If you do not have an apartment to list, you can pay a fee to access the platform.`,
+    image: '/payment.svg',
   },
   {
     id: '02',
-    name: 'Connect with property owner',
-    description: `Once you have found your desired property, 
-            you will fill out an application to the property owner. The owner will
-			review your details and either accept or decline your request.`,
-    image: '/connect.svg',
+    name: 'Search for apartment',
+    description: `Search for your ideal apartment with ease. We provide 
+            detailed apartment and neighbourhood descriptions that will 
+            guide you in making the perfect choice.`,
+    image: '/search.svg',
   },
   {
     id: '03',
-    name: ' Inspect property',
-    description: `If the owner accepts your application, 
-            you can schedule a physical inspection to ensure that everything is in order.`,
-    image: '/inspect.svg',
+    name: 'Connect with occupant or owner',
+    description: `Connect with the current occupant or landlord to clear up any issues.
+            This ensures you have correct knowledge of the property.`,
+    image: '/connect.svg',
   },
   {
     id: '04',
-    name: 'Make payment, get your keys',
-    description: `If you are satisfied with the property and the terms of rent
-            agreement, you can make the payment and get your keys.`,
-    image: '/payment.svg',
+    name: ' Inspect property and pay',
+    description: `If you are satisfied with the terms, you can schedule a physical 
+            inspection to ensure that everything is in order and then proceed to make payment.`,
+    image: '/inspect.svg',
   },
 ]
 </script>
