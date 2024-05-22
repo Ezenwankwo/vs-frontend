@@ -59,7 +59,8 @@
 
 <script setup lang="ts">
 const navItems = [
-  { name: 'Explore properties', href: '/apartments' },
+  { name: 'Home', href: '/' },
+  { name: 'Explore', href: '/apartments' },
   { name: 'Blog', href: '/blogs' },
 ]
 
