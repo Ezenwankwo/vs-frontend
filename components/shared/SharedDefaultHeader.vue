@@ -6,7 +6,7 @@
           <div class="lg:flex-1 flex items-center gap-1.5">
             <ULink
               to="/"
-              class="router-link-active router-link-exact-active flex-shrink-0 font-bold w-4/5 md:w-full text-xl text-gray-900 dark:text-white flex items-end gap-1.5"
+              class="router-link-active router-link-exact-active flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"
               aria-label="Logo"
             >
               <img src="~/assets/images/logo.svg" alt="logo" />
