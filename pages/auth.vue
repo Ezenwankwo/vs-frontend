@@ -1,9 +1,13 @@
 <template>
   <div>
     <UContainer class="py-12 sm">
-      <SharedSectionTitle text="Cut agency fees, expand your options" />
-      <UTabs :items="items" class="md:w-2/3 mt-12 mx-auto">
-        <template #create="{ item }">
+      <SharedSectionTitle text="Expand your options, cut agency fee!" />
+      <UTabs
+        :items="items"
+        :default-index="defaultTab"
+        class="md:w-2/3 mt-12 mx-auto"
+      >
+        <template #create="{ item: createItem }">
           <UCard @submit.prevent="onSubmitCreate">
             <template #header>
               <div class="flex justify-between items-center">
@@ -11,7 +15,7 @@
                   <h3
                     class="text-base font-['Lato'] font-semibold leading-6 text-gray-900 dark:text-white"
                   >
-                    {{ item.content }}
+                    {{ createItem.content }}
                   </h3>
 
                   <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -116,7 +120,7 @@
           </UCard>
         </template>
 
-        <template #signin="{ item }">
+        <template #signin="{ item: signInItem }">
           <UCard @submit.prevent="onSubmitSignIn">
             <template #header>
               <div class="flex justify-between items-center">
@@ -124,7 +128,7 @@
                   <h3
                     class="text-base font-['Lato'] font-semibold leading-6 text-gray-900 dark:text-white"
                   >
-                    {{ item.content }}
+                    {{ signInItem.content }}
                   </h3>
 
                   <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
@@ -241,6 +245,10 @@
 
 <script setup lang="ts">
 const toast = useToast()
+
+const route = useRoute()
+const step = ref(route.query.step)
+const defaultTab = step.value === 'signin' ? 1 : 0
 
 const showPassword = ref(false)
 

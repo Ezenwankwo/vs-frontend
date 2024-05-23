@@ -4,7 +4,7 @@
       <UBreadcrumb divider="/" :links="breadCrumbLinks" class="my-4 lg:my-6" />
       <div class="flex flex-col lg:flex-row lg:space-x-4">
         <UTabs :items="items" class="lg:w-2/3" @change="onTabChange">
-          <template #apartment="{ item }">
+          <template #apartment="{ item: apartmentItem }">
             <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }">
               <UCarousel
                 v-if="apartment.media_type === 'image'"
@@ -21,7 +21,7 @@
               </UCarousel>
               <template #footer>
                 <h3 class="font-['Lato'] font-semibold text-xl text-primary">
-                  {{ item.content }}
+                  {{ apartmentItem.content }}
                 </h3>
                 <p class="mt-2">
                   {{ apartment.description }}
@@ -30,7 +30,7 @@
             </UCard>
           </template>
 
-          <template #location="{ item }">
+          <template #location="{ item: locationItem }">
             <UCard :ui="{ body: { padding: 'p-0 sm:p-0' } }">
               <NuxtImg
                 src="/map.png"
@@ -39,7 +39,7 @@
 
               <template #footer>
                 <h3 class="font-['Lato'] font-semibold text-xl text-primary">
-                  {{ item.content }}
+                  {{ locationItem.content }}
                 </h3>
                 <p class="mt-2">
                   {{ apartment.description }}

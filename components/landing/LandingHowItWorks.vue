@@ -37,31 +37,31 @@
 const rentSteps = [
   {
     id: '01',
-    name: 'List your apartment',
-    description: `List your vacant or soon-to-be-vacant apartment.
-            If you do not have an apartment to list, you can pay a fee to access the platform.`,
+    name: 'Tell us what you need',
+    description: `We will show you options that match your request.
+      As new options are added, we will keep you updated.`,
     image: '/payment.svg',
   },
   {
     id: '02',
-    name: 'Search for apartment',
-    description: `Search for your ideal apartment with ease. We provide 
-            detailed apartment and neighbourhood descriptions that will 
-            guide you in making the perfect choice.`,
+    name: 'List your apartment',
+    description: `Vacant Soon source apartments by allowing
+      renters and property owners to list their vacant or soon to be vacant apartments.`,
     image: '/search.svg',
   },
   {
     id: '03',
-    name: 'Connect with occupant or owner',
-    description: `Connect with the current occupant or landlord to clear up any issues.
-            This ensures you have correct knowledge of the property.`,
+    name: 'Make your choice',
+    description: `Select the apartment that best fits your needs.
+      We will provide more information & organize virtual or 
+      physical inspection if you need it.`,
     image: '/connect.svg',
   },
   {
     id: '04',
-    name: ' Inspect property and pay',
-    description: `If you are satisfied with the terms, you can schedule a physical 
-            inspection to ensure that everything is in order and then proceed to make payment.`,
+    name: 'Connect with property owner/manager',
+    description: `We connect you to the property owner/manager, so you can proceed to sign
+      the renter agreement and pay. We charge a 1% agency fee.`,
     image: '/inspect.svg',
   },
 ]

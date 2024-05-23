@@ -1,60 +1,116 @@
 <template>
-  <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50 shadow">
-    <UContainer>
-      <div class="mx-auto flex items-center justify-between gap-3">
-        <div class="lg:flex-1 flex items-center gap-1.5">
-          <a
-            aria-current="page"
-            href="/"
-            class="router-link-active router-link-exact-active flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"
-            aria-label="Logo"
-          >
-            <img src="~/assets/images/logo.svg" alt="logo" />
-          </a>
-        </div>
-        <ul
-          class="items-center ring-1 ring-gray-200 dark:ring-gray-800 px-3 gap-x-0 rounded-full hidden lg:flex"
-        >
-          <li v-for="item in navItems" :key="item.name" class="relative">
+  <div>
+    <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50 shadow">
+      <UContainer>
+        <div class="mx-auto flex items-center justify-between gap-3">
+          <div class="lg:flex-1 flex items-center gap-1.5">
             <ULink
-              :to="item.href"
-              active-class="after:inset-x-2 font-medium"
-              class="text-sm/6 flex items-center gap-1 py-2 px-4 transition-colors relative after:absolute after:-bottom-px after:h-px after:rounded-full after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-900 dark:text-white after:opacity-100"
+              to="/"
+              class="router-link-active router-link-exact-active flex-shrink-0 font-bold w-4/5 md:w-full text-xl text-gray-900 dark:text-white flex items-end gap-1.5"
+              aria-label="Logo"
             >
-              {{ item.name }}
+              <img src="~/assets/images/logo.svg" alt="logo" />
             </ULink>
-          </li>
-        </ul>
-        <div class="flex items-center justify-end lg:flex-1 gap-1.5">
-          <ClientOnly>
-            <UButton
-              :icon="
-                isDark
-                  ? 'i-heroicons-moon-20-solid'
-                  : 'i-heroicons-sun-20-solid'
-              "
-              color="gray"
-              variant="ghost"
-              aria-label="Theme"
-              @click="isDark = !isDark"
-            />
-            <template #fallback>
-              <div class="w-8 h-8" />
-            </template>
-          </ClientOnly>
-          <UButton
-            v-if="!route.path.includes('auth')"
-            label="Login"
-            variant="outline"
-            to="/auth"
-            color="primary"
-            class="lg:flex px-6 py-3"
+          </div>
+          <ul
+            class="items-center ring-1 ring-gray-200 dark:ring-gray-800 px-3 gap-x-0 rounded-full hidden lg:flex"
           >
-          </UButton>
+            <li
+              v-for="desktopItem in navItems"
+              :key="desktopItem.name"
+              class="relative"
+            >
+              <ULink
+                :to="desktopItem.href"
+                active-class="after:inset-x-2 font-medium"
+                class="text-sm/6 flex items-center gap-1 py-2 px-4 transition-colors relative after:absolute after:-bottom-px after:h-px after:rounded-full after:bg-gray-900 dark:after:bg-white after:transition-opacity text-gray-900 dark:text-white after:opacity-100"
+              >
+                {{ desktopItem.name }}
+              </ULink>
+            </li>
+          </ul>
+          <div class="flex items-center justify-end lg:flex-1 gap-1.5">
+            <ClientOnly>
+              <UButton
+                :icon="
+                  isDark
+                    ? 'i-heroicons-moon-20-solid'
+                    : 'i-heroicons-sun-20-solid'
+                "
+                color="gray"
+                variant="ghost"
+                aria-label="Theme"
+                @click="isDark = !isDark"
+              />
+              <template #fallback>
+                <div class="w-8 h-8" />
+              </template>
+            </ClientOnly>
+            <UButton
+              v-if="!route.path.includes('auth')"
+              label="Login"
+              variant="outline"
+              :to="{ name: 'auth', query: { step: 'signin' } }"
+              color="primary"
+              class="lg:flex px-6 py-3 hidden md:block"
+            >
+            </UButton>
+            <UButton
+              v-if="showMobileMenu === false"
+              color="gray"
+              type="button"
+              class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 p-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center lg:hidden"
+              aria-label="Open Menu"
+              @click="showMobileMenu = !showMobileMenu"
+            >
+              <span
+                class="i-heroicons-bars-3-20-solid flex-shrink-0 h-5 w-5"
+                aria-hidden="true"
+              ></span>
+            </UButton>
+            <UButton
+              v-else
+              color="gray"
+              type="button"
+              class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 p-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center lg:hidden"
+              aria-label="Close Menu"
+              @click="showMobileMenu = !showMobileMenu"
+            >
+              <span
+                class="i-heroicons-x-mark-20-solid flex-shrink-0 h-5 w-5"
+                aria-hidden="true"
+              ></span>
+            </UButton>
+          </div>
         </div>
+      </UContainer>
+    </header>
+    <div v-show="showMobileMenu" class="px-4 sm:px-6 pt-3 pb-6">
+      <div class="space-y-3 mb-3 lg:mb-6 lg:mx-0">
+        <ULink
+          v-for="mobileItem in navItems"
+          :key="mobileItem.name"
+          class="flex items-center text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 font-medium"
+          :to="mobileItem.href"
+          active-class="after:inset-x-2 font-medium"
+          @click="showMobileMenu = false"
+        >
+          <span class="text-sm/6 relative">{{ mobileItem.name }} </span>
+        </ULink>
       </div>
-    </UContainer>
-  </header>
+
+      <UButton
+        v-if="!route.path.includes('auth')"
+        label="Login"
+        variant="outline"
+        :to="{ name: 'auth', query: { step: 'signin' } }"
+        color="primary"
+        class="lg:flex px-6 py-3"
+        @click="showMobileMenu = !showMobileMenu"
+      >
+      </UButton>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -76,4 +132,6 @@ const isDark = computed({
 })
 
 const route = useRoute()
+console.log(route.query)
+const showMobileMenu = ref(false)
 </script>
