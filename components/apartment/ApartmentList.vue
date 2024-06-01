@@ -1,5 +1,5 @@
 <template>
-  <UContainer class="flex flex-col md:flex-row mt-10 gap-8 rounded-md">
+  <div class="flex flex-col md:flex-row mt-10 gap-6 rounded-md">
     <ULink
       v-for="listing in sampleListings"
       :key="listing.name"
@@ -31,18 +31,18 @@
           class="object-cover h-72 w-full rounded-t-md"
         />
         <span
-          class="absolute p-4 m-2 font-semibold bg-gray-500/70 text-white rounded-md"
+          class="absolute p-3 m-2 font-semibold bg-gray-500/70 text-white rounded-md"
           ><span>&#8358;</span> {{ listing.price }}</span
         >
       </div>
-      <div class="flex flex-col p-5">
-        <h4 class="font-['Lato'] font-semibold text-lg text-primary">
+      <div class="flex flex-col p-3">
+        <h4 class="font-['Lato'] font-medium text-lg text-primary">
           {{ listing.name }}
         </h4>
-        <span>{{ listing.location }}</span>
+        <span class="text-gray-700">{{ listing.location }}</span>
       </div>
     </ULink>
-  </UContainer>
+  </div>
 </template>
 
 <script setup lang="ts">

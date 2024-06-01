@@ -52,7 +52,7 @@
               variant="outline"
               :to="{ name: 'auth', query: { step: 'signin' } }"
               color="primary"
-              class="lg:flex px-6 py-3 hidden md:block"
+              class="lg:flex hidden md:block"
             >
             </UButton>
             <UButton
@@ -105,7 +105,7 @@
         variant="outline"
         :to="{ name: 'auth', query: { step: 'signin' } }"
         color="primary"
-        class="lg:flex px-6 py-3"
+        class="lg:flex"
         @click="showMobileMenu = !showMobileMenu"
       >
       </UButton>
@@ -132,6 +132,5 @@ const isDark = computed({
 })
 
 const route = useRoute()
-console.log(route.query)
 const showMobileMenu = ref(false)
 </script>
