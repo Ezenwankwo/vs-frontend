@@ -28,9 +28,20 @@ export default defineNuxtConfig({
     ['@dargmuesli/nuxt-cookie-control', {}],
     'dayjs-nuxt',
   ],
+  ui: {
+    icons: ['heroicons', 'tabler'],
+  },
   runtimeConfig: {
     public: {
       GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    },
+  },
+  experimental: {
+    asyncContext: true,
+  },
+  security: {
+    headers: {
+      contentSecurityPolicy: false,
     },
   },
 })

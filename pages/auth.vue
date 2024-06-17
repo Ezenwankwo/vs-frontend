@@ -34,8 +34,6 @@
                   v-model="createAccountForm.email"
                   type="email"
                   required
-                  size="xl"
-                  color="gray"
                 />
               </UFormGroup>
               <UFormGroup label="Password" name="password">
@@ -43,8 +41,6 @@
                   v-model="createAccountForm.password"
                   :type="showPassword ? 'text' : 'password'"
                   required
-                  size="xl"
-                  color="gray"
                 >
                   <template #trailing>
                     <span
@@ -65,9 +61,6 @@
                   type="number"
                   maxlength="6"
                   required
-                  size="xl"
-                  color="gray"
-                  class="mb-4"
                 />
                 <span class="text-sm text-primary-500" @click="onResendToken"
                   >Resend token</span
@@ -76,24 +69,10 @@
             </div>
             <div v-if="createAccountStep === 3">
               <UFormGroup label="Full name" name="name" class="mb-3">
-                <UInput
-                  v-model="profileForm.name"
-                  type="text"
-                  required
-                  size="xl"
-                  color="gray"
-                  class="mb-4"
-                />
+                <UInput v-model="profileForm.name" required />
               </UFormGroup>
               <UFormGroup label="Phone number" name="phone" class="mb-3">
-                <UInput
-                  v-model="profileForm.phone"
-                  type="text"
-                  required
-                  size="xl"
-                  color="gray"
-                  class="mb-4"
-                />
+                <UInput v-model="profileForm.phone" required />
               </UFormGroup>
               <UFormGroup
                 label="Are you a property owner or manager?"
@@ -102,12 +81,8 @@
               >
                 <USelect
                   v-model="profileForm.ownership"
-                  type="text"
                   required
-                  size="xl"
-                  color="gray"
                   :options="['Property Owner', 'Property Manager']"
-                  class="mb-4"
                 />
               </UFormGroup>
             </div>
@@ -144,13 +119,7 @@
             </template>
             <div v-if="resetPasswordStep === 0">
               <UFormGroup label="Email" name="email" class="mb-3">
-                <UInput
-                  v-model="signInForm.email"
-                  type="email"
-                  required
-                  size="xl"
-                  color="gray"
-                />
+                <UInput v-model="signInForm.email" type="email" required />
               </UFormGroup>
               <UFormGroup
                 label="Password"
@@ -161,9 +130,6 @@
                   v-model="signInForm.password"
                   type="password"
                   required
-                  size="xl"
-                  color="gray"
-                  class="mb-4"
                 />
                 <span
                   class="text-sm text-primary-500 cursor-pointer"
@@ -178,9 +144,6 @@
                   v-model="forgotPasswordForm.email"
                   type="email"
                   required
-                  size="xl"
-                  color="gray"
-                  class="mb-4"
                 />
                 <span
                   class="text-sm text-primary-500 cursor-pointer"
@@ -196,9 +159,6 @@
                   type="number"
                   maxlength="6"
                   required
-                  size="xl"
-                  color="gray"
-                  class="mb-4"
                 />
                 <span class="text-sm text-primary-500" @click="onResendToken"
                   >Resend token</span
@@ -211,8 +171,6 @@
                   v-model="resetPasswordForm.password"
                   type="password"
                   required
-                  size="xl"
-                  color="gray"
                 />
               </UFormGroup>
               <UFormGroup
@@ -224,9 +182,6 @@
                   v-model="resetPasswordForm.confirmPassword"
                   type="password"
                   required
-                  size="xl"
-                  color="gray"
-                  class="mb-4"
                 />
               </UFormGroup>
             </div>

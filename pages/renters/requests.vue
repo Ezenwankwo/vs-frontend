@@ -5,11 +5,8 @@
       <UButton
         v-if="apartments.length < 10"
         icon="i-heroicons-plus-16-solid"
-        size="sm"
-        color="primary"
         variant="outline"
-        label="New request"
-        trailing
+        label="Add request"
         @click="isOpen = true"
       />
     </div>
@@ -200,16 +197,6 @@
 </template>
 
 <script setup lang="ts">
-type PredictionResponse = {
-  suggestions: {
-    placePrediction: {
-      text: {
-        text: string
-      }
-    }
-  }[]
-}
-
 type Request = {
   id: string
   location: string
@@ -259,32 +246,13 @@ const priceRange = [
 ]
 
 const loading = ref(false)
-const runtimeConfig = useRuntimeConfig()
-const apiKey = runtimeConfig.public.GOOGLE_API_KEY
 
 async function search(q: string) {
   loading.value = true
-
   const searchText = q || location.value || 'Abuja' // use Abuja for initial search query
-  const result: PredictionResponse = await $fetch(
-    'https://places.googleapis.com/v1/places:autocomplete',
-    {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Goog-Api-Key': apiKey,
-      },
-      body: {
-        input: searchText,
-        includedRegionCodes: ['NG'],
-      },
-    },
-  )
+  const result = await useLocation(searchText)
   loading.value = false
-  const textValues = result.suggestions
-    .map((item) => item.placePrediction.text.text)
-    .map((place) => place.replace(/, Nigeria$/, ''))
-  return textValues
+  return result
 }
 
 function onSelect(item: any) {

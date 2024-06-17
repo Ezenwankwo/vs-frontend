@@ -1,17 +1,12 @@
 <template>
-  <div class="flex flex-col md:flex-row mt-10 gap-6 rounded-md">
-    <ULink
-      v-for="listing in sampleListings"
-      :key="listing.name"
-      :to="`/apartments/${listing.slug}/`"
-      class="border md:w-1/3 shadow rounded-md"
-    >
+  <div>
+    <div>
       <div class="flex">
         <!-- for images -->
         <UCarousel
-          v-if="listing.media_type === 'image'"
+          v-if="props.mediaType === 'image'"
           v-slot="{ item }"
-          :items="listing.image"
+          :items="props.image"
           :ui="{ item: 'basis-full' }"
           indicators
         >
@@ -24,55 +19,74 @@
         <!-- for video -->
         <video
           v-else
-          :src="listing.video"
+          :src="props.video"
           controls
           controlslist="nodownload"
           preload="metadata"
           class="object-cover h-72 w-full rounded-t-md"
         />
         <span
-          class="absolute p-3 m-2 font-semibold bg-gray-500/70 text-white rounded-md"
-          ><span>&#8358;</span> {{ listing.price }}</span
+          class="absolute p-2 m-2 font-semibold bg-gray-500/70 text-white text-sm rounded-md"
+          ><span>&#8358;</span> {{ props.price }}</span
         >
       </div>
-      <div class="flex flex-col p-3">
-        <h4 class="font-['Lato'] font-medium text-lg text-primary">
-          {{ listing.name }}
+      <div class="flex flex-col p-3 space-y-2">
+        <h4 class="font-['Lato'] text-gray-700 font-medium text-lg">
+          {{ props.name }}
         </h4>
-        <span class="text-gray-700">{{ listing.location }}</span>
+        <div class="flex space-x-2">
+          <UButton
+            icon="i-heroicons-eye"
+            block
+            label="View"
+            variant="outline"
+            class="w-[calc(50%-0.25rem)]"
+            @click="isOpenDetail = true"
+          />
+          <UButton
+            v-if="route.path.includes('listings')"
+            icon="i-heroicons-pencil-square"
+            block
+            label="Edit"
+            class="w-[calc(50%-0.25rem)]"
+            @click="isOpenForm = true"
+          />
+          <UButton
+            v-else
+            :to="`/${userType}/messages`"
+            icon="i-heroicons-chat-bubble-bottom-center-text"
+            block
+            label="Message"
+            class="w-[calc(50%-0.25rem)]"
+          />
+        </div>
       </div>
-    </ULink>
+    </div>
+    <!-- <! Add apartment forml> -->
+    <div>
+      <UModal v-model="isOpenForm">
+        <ApartmentForm />
+      </UModal>
+      <UModal v-model="isOpenDetail">
+        <ApartmentDetail />
+      </UModal>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-const sampleListings = [
-  {
-    name: 'Studio Apartment in Karu',
-    image: ['/shortlet.png', '/office.png', '/shortlet.png'],
-    video: '',
-    media_type: 'image',
-    price: '2,000,000',
-    location: '10 Mayne Avenue, Calabar',
-    slug: 'studio-apartment-in-karu',
-  },
-  {
-    name: '2 Bedroom Block of Flats',
-    image: [],
-    video: '/video.mp4',
-    media_type: 'video',
-    price: '800,000',
-    location: '13 Liberty Street, Benin City',
-    slug: '2-bedroom-block-of-flats',
-  },
-  {
-    name: 'Studio Apartment in Karu',
-    image: ['/office.png', '/shortlet.png'],
-    video: '',
-    media_type: 'image',
-    price: '1,200,000',
-    location: '17 Nsikak-Edet Crescent, Sunshine Homes, Lokogoma',
-    slug: 'studio-apartment-in-karu',
-  },
-]
+const isOpenForm = ref(false)
+const isOpenDetail = ref(false)
+const route = useRoute()
+const userType = 'renters'
+
+const props = defineProps({
+  name: { type: String, default: '' },
+  image: { type: Array, default: () => [] },
+  video: { type: String, default: '' },
+  mediaType: { type: String, default: '' },
+  price: { type: String, default: '' },
+  location: { type: String, default: '' },
+  slug: { type: String, default: '' },
+})
 </script>
