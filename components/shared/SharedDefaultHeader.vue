@@ -116,7 +116,7 @@
 <script setup lang="ts">
 const navItems = [
   { name: 'Home', href: '/' },
-  { name: 'Explore', href: '/apartments' },
+  { name: 'Explore', href: '/' },
   { name: 'Blog', href: '/blogs' },
 ]
 

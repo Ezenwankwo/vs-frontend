@@ -4,7 +4,7 @@
     <p class="text-sm text-gray-500">
       We need this details to connect you with owners and agents
     </p>
-    <DashboardProfileForm />
+    <DashboardProfile />
   </div>
 </template>
 

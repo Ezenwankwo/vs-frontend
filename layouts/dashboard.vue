@@ -76,13 +76,18 @@ const users = {
         to: '/agents/listings',
       },
       {
+        label: 'Requests',
+        icon: 'i-heroicons-arrow-path-rounded-square',
+        to: '/agents/requests',
+      },
+      {
         label: 'Messages',
         icon: 'i-heroicons-chat-bubble-bottom-center-text',
         to: '/agents/messages',
       },
       {
         label: 'Earnings',
-        icon: 'i-heroicons-chart-bar',
+        icon: 'i-tabler-currency-naira',
         to: '/agents/earnings',
       },
     ],
@@ -200,7 +205,7 @@ const users = {
   ],
 }
 
-const userType = 'renters'
+const userType = 'agents'
 
 const links = computed(() => users[userType])
 </script>

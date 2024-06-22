@@ -4,9 +4,8 @@
     <UBadge
       v-if="props.showBadge"
       :label="props.badgeLabel"
-      size="xs"
       color="primary"
-      variant="outline"
+      variant="subtle"
     />
   </div>
 </template>
