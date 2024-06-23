@@ -1,11 +1,11 @@
 <template>
-  <div class="mt-12 flex border rounded-md">
+  <div class="flex rounded-md">
     <div class="w-1/3 p-6 flex flex-col items-center space-y-4">
       <UAvatar alt="Benjamin Canac" size="3xl" class="border" />
       <h3 class="justify-center">Benjamin Canac</h3>
       <UButton
         icon="i-heroicons-pencil-square"
-        label="Edit profile"
+        label="Edit"
         variant="outline"
         @click="isOpen = true"
       />

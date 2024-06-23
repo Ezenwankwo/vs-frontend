@@ -1,8 +1,24 @@
 <template>
-  <div class="mt-12">
+  <div>
+    <!-- Filters -->
+    <div class="flex items-center justify-between gap-3 px-4 py-3">
+      <UInput
+        v-model="search"
+        icon="i-heroicons-magnifying-glass-20-solid"
+        placeholder="Search..."
+      />
+
+      <USelectMenu
+        v-model="selectedStatus"
+        :options="chatStatus"
+        multiple
+        placeholder="Status"
+        class="w-40"
+      />
+    </div>
     <div class="flex flex-1 h-screen">
       <div
-        class="flex-col rounded-md rounded-r-none items-stretch relative border-b lg:border-b-0 lg:border-x lg:border-t border-gray-200 dark:border-gray-800 lg:w-[--width] flex-shrink-0 flex"
+        class="flex-col rounded-md rounded-r-none items-stretch relative border-b lg:border-b-0 lg:border-x border-gray-200 dark:border-gray-800 lg:w-[--width] flex-shrink-0 flex"
         style="--width: 400px"
       >
         <div
@@ -154,6 +170,22 @@ const chats = [
                   it with you.`,
     has_unread: false,
     date: 'Jun 9',
+  },
+]
+
+const search = ref('')
+const selectedStatus = ref<{ value: string }[]>([])
+
+const chatStatus = [
+  {
+    key: 'all',
+    label: 'All',
+    value: false,
+  },
+  {
+    key: 'unread',
+    label: 'Unread',
+    value: true,
   },
 ]
 </script>

@@ -236,7 +236,7 @@ const resetForm = () => {
   emit('close')
 }
 
-const editRequest = () => {
+function editRequest() {
   // Edit request api
   const requestData = {
     location,
@@ -257,7 +257,7 @@ const editRequest = () => {
   console.log(requestData)
 }
 
-const createRequest = () => {
+function createRequest() {
   // Create request
   const requestData = {
     location,
