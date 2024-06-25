@@ -150,7 +150,7 @@ const users = {
         to: '/managers/messages',
       },
       {
-        label: 'Property Owners',
+        label: 'Owners',
         icon: 'i-heroicons-user-group',
         to: '/managers/owners',
       },
@@ -205,7 +205,7 @@ const users = {
   ],
 }
 
-const userType = 'agents'
+const userType = 'owners'
 
 const links = computed(() => users[userType])
 </script>

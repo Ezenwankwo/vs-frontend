@@ -1,7 +1,181 @@
 <template>
   <div>
-    <DashboardTitle text="Tenants" badge-label="10" show-badge />
-    <p class="text-sm text-gray-500">View your tenants and tenancy details</p>
+    <div>
+      <UCard
+        class="w-full"
+        :ui="{
+          base: '',
+          ring: '',
+          divide: 'divide-y divide-gray-200 dark:divide-gray-700',
+          header: { padding: 'px-4 py-5' },
+          body: {
+            padding: '',
+            base: 'divide-y divide-gray-200 dark:divide-gray-700',
+          },
+          footer: { padding: 'p-4' },
+        }"
+      >
+        <template #header>
+          <div class="flex justify-between">
+            <DashboardTitle text="Tenants" badge-label="10" show-badge />
+            <UButton
+              icon="i-heroicons-plus-16-solid"
+              variant="outline"
+              label="Add"
+              @click="isOpen = true"
+            />
+          </div>
+          <p class="text-sm text-gray-500">View and manage your tenants</p>
+        </template>
+
+        <!-- Filters -->
+        <div class="flex items-center justify-between gap-3 px-4 py-3">
+          <UInput
+            v-model="search"
+            icon="i-heroicons-magnifying-glass-20-solid"
+            placeholder="Search..."
+          />
+
+          <USelectMenu
+            v-model="selectedStatus"
+            :options="tenantStatus"
+            multiple
+            placeholder="Status"
+            class="w-40"
+          />
+        </div>
+
+        <!-- Header and Action buttons -->
+        <div class="flex justify-between items-center w-full px-4 py-3">
+          <div class="flex items-center gap-1.5">
+            <span class="text-sm leading-5">Rows per page:</span>
+
+            <USelect
+              v-model="pageCount"
+              :options="[3, 5, 10, 20, 30, 40]"
+              class="me-2 w-15"
+              size="xs"
+            />
+          </div>
+
+          <div class="flex gap-1.5 items-center">
+            <UDropdown
+              v-if="selectedRows.length > 0"
+              :items="actions"
+              :ui="{ width: 'w-36' }"
+            >
+              <UButton
+                icon="i-heroicons-chevron-down"
+                trailing
+                color="gray"
+                size="xs"
+              >
+                Mark as
+              </UButton>
+            </UDropdown>
+
+            <USelectMenu v-model="selectedColumns" :options="columns" multiple>
+              <UButton icon="i-heroicons-view-columns" color="gray" size="xs">
+                Columns
+              </UButton>
+            </USelectMenu>
+
+            <UButton
+              icon="i-heroicons-funnel"
+              color="gray"
+              size="xs"
+              :disabled="search === '' && selectedStatus.length === 0"
+              @click="resetFilters"
+            >
+              Reset
+            </UButton>
+          </div>
+        </div>
+        <UTable
+          v-model="selectedRows"
+          v-model:sort="sort"
+          :columns="columnsTable"
+          :loading="pending"
+          sort-asc-icon="i-heroicons-arrow-up"
+          sort-desc-icon="i-heroicons-arrow-down"
+          sort-mode="manual"
+          :rows="yourTenants"
+          class="border min-h-96 text-gray-700"
+          :ui="{
+            td: { base: 'max-w-[0] truncate' },
+            default: { checkbox: { color: 'gray' } },
+          }"
+          @select="select"
+        >
+          <template #empty-state>
+            <div class="flex flex-col items-center justify-center py-48 gap-3">
+              <Icon name="i-heroicons-circle-stack-20-solid" />
+              <span class="italic text-sm">No tenants yet!</span>
+              <UButton
+                icon="i-heroicons-plus-16-solid"
+                label="Add"
+                @click="isOpen = true"
+              />
+            </div>
+          </template>
+
+          <template #status-data="{ row }">
+            <UBadge
+              :label="row.status"
+              :color="row.status === 'Active' ? 'primary' : 'gray'"
+              variant="subtle"
+            />
+          </template>
+
+          <template #actions-data="{ row }">
+            <UDropdown :items="items(row)">
+              <UButton
+                color="gray"
+                variant="ghost"
+                icon="i-heroicons-ellipsis-horizontal-20-solid"
+              />
+            </UDropdown>
+          </template>
+        </UTable>
+        <!-- Number of rows & Pagination -->
+        <template #footer>
+          <div class="flex flex-wrap justify-between items-center">
+            <div>
+              <span class="text-sm leading-5">
+                Showing
+                <span class="font-medium">{{ pageFrom }}</span>
+                to
+                <span class="font-medium">{{ pageTo }}</span>
+                of
+                <span class="font-medium">{{ pageTotal }}</span>
+                results
+              </span>
+            </div>
+
+            <UPagination
+              v-model="page"
+              :page-count="pageCount"
+              :total="pageTotal"
+              :ui="{
+                wrapper: 'flex items-center gap-1',
+                default: {
+                  activeButton: {
+                    variant: 'outline',
+                  },
+                },
+              }"
+            />
+          </div>
+        </template>
+      </UCard>
+    </div>
+    <UModal v-model="isOpen" prevent-close>
+      <TenantForm :tenant="tenant" @close="handleFormClose" />
+    </UModal>
+
+    <UModal v-model="isDeleteOpen" prevent-close>
+      <TenantDelete :tenant="tenant" @close="isDeleteOpen = false" />
+    </UModal>
   </div>
 </template>
 
@@ -9,4 +183,187 @@
 definePageMeta({
   layout: 'dashboard',
 })
+
+const search = ref('')
+const sort = ref({ column: 'id', direction: 'asc' as const })
+const selectedStatus = ref<{ value: string }[]>([])
+const page = ref(1)
+const pageCount = ref(10)
+const pageTotal = ref(200) // This value should be dynamic coming from the API
+const pageFrom = computed(() => (page.value - 1) * pageCount.value + 1)
+const pageTo = computed(() =>
+  Math.min(page.value * pageCount.value, pageTotal.value),
+)
+const selectedRows = ref<{ id: number }[]>([])
+
+const isOpen = ref(false)
+const isDeleteOpen = ref(false)
+
+const tenant = ref({})
+
+// Actions
+const actions = [
+  [
+    {
+      key: 'completed',
+      label: 'Completed',
+      icon: 'i-heroicons-check',
+    },
+  ],
+  [
+    {
+      key: 'uncompleted',
+      label: 'In Progress',
+      icon: 'i-heroicons-arrow-path',
+    },
+  ],
+]
+
+// Filters
+const tenantStatus = [
+  {
+    key: 'active',
+    label: 'Active',
+    value: false,
+  },
+  {
+    key: 'inactive',
+    label: 'Inactive',
+    value: true,
+  },
+]
+
+const resetFilters = () => {
+  search.value = ''
+  selectedStatus.value = []
+}
+
+const handleFormClose = () => {
+  isOpen.value = false
+  tenant.value = {}
+}
+
+const columns = [
+  {
+    key: 'name',
+    label: 'Name',
+    sortable: true,
+  },
+  {
+    key: 'apartment',
+    label: 'Apartment',
+    sortable: true,
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    sortable: true,
+  },
+  {
+    key: 'date',
+    label: 'Date Joined',
+    sortable: true,
+  },
+  {
+    key: 'actions',
+    label: 'Actions',
+    sortable: false,
+  },
+]
+
+const selectedColumns = ref(columns)
+const columnsTable = computed(() =>
+  columns.filter((column) => selectedColumns.value.includes(column)),
+)
+
+const yourTenants = [
+  {
+    id: 1,
+    name: 'Kennedy Ekhator',
+    apartment: '2 bedroom apartment, Yauri',
+    status: 'Active',
+    date: '4 Jan, 2017',
+  },
+  {
+    id: 2,
+    name: 'Felix Agyemang',
+    apartment: '1 bedroom apartment, Egbema',
+    status: 'Inactive',
+    date: '13 Aug, 2020',
+  },
+]
+
+const items = (row: any) => [
+  [
+    {
+      label: 'Edit',
+      icon: 'i-heroicons-pencil-square-20-solid',
+      click: () => {
+        tenant.value = row
+        isOpen.value = true
+      },
+    },
+  ],
+  [
+    {
+      label: 'Delete',
+      icon: 'i-heroicons-trash-20-solid',
+      click: () => {
+        isDeleteOpen.value = true
+        tenant.value = row
+      },
+    },
+  ],
+]
+
+function select(row: { id: number }) {
+  const index = selectedRows.value.findIndex((item) => item.id === row.id)
+  if (index === -1) {
+    selectedRows.value.push(row)
+  } else {
+    selectedRows.value.splice(index, 1)
+  }
+}
+
+const searchStatus = computed(() => {
+  if (selectedStatus.value?.length === 0) {
+    return ''
+  }
+
+  if (selectedStatus?.value?.length > 1) {
+    return `?completed=${selectedStatus.value[0].value}&completed=${selectedStatus.value[1].value}`
+  }
+
+  return `?completed=${selectedStatus.value[0].value}`
+})
+
+// Data
+const { data: tenants, pending } = await useLazyAsyncData<
+  {
+    id: number
+    title: string
+    completed: string
+  }[]
+>(
+  'earnings',
+  () =>
+    ($fetch as any)(
+      `https://jsonplaceholder.typicode.com/todos${searchStatus.value}`,
+      {
+        query: {
+          q: search.value,
+          _page: page.value,
+          _limit: pageCount.value,
+          _sort: sort.value.column,
+          _order: sort.value.direction,
+        },
+      },
+    ),
+  {
+    default: () => [],
+    watch: [page, search, searchStatus, pageCount, sort],
+  },
+)
+
+console.log(tenants.value[0].completed)
 </script>

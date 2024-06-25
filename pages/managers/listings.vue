@@ -1,54 +1,120 @@
 <template>
   <div>
-    <div class="flex justify-between">
-      <DashboardTitle text="Listings" badge-label="10" show-badge />
-      <USelect
-        v-model="selected"
-        icon="i-heroicons-funnel"
-        :options="status"
-        placeholder="Filter by status"
-        class="w-1/3"
-      />
-    </div>
-    <p class="text-sm text-gray-500">Apartments that you've listed</p>
-    <div class="mt-12">
-      <div
-        v-if="numListings === 5"
-        class="flex flex-col md:flex-row mt-10 gap-4 rounded-md"
-      >
-        <div
-          v-for="listing in listings"
-          :key="listing.slug"
-          class="border md:w-1/3 shadow rounded-md"
-        >
-          <ApartmentList
-            :name="listing.name"
-            :image="listing.image"
-            :video="listing.video"
-            :media-type="listing.media_type"
-            :price="listing.price"
-            :location="listing.location"
-            :slug="listing.slug"
+    <UCard
+      class="w-full"
+      :ui="{
+        base: '',
+        ring: '',
+        divide: 'divide-y divide-gray-200 dark:divide-gray-700',
+        header: { padding: 'px-4 py-5' },
+        body: {
+          padding: '',
+          base: 'divide-y divide-gray-200 dark:divide-gray-700',
+        },
+        footer: { padding: 'p-4' },
+      }"
+    >
+      <template #header>
+        <div class="flex justify-between">
+          <DashboardTitle text="Listings" badge-label="10" show-badge />
+          <UButton
+            icon="i-heroicons-plus-16-solid"
+            variant="outline"
+            label="Add"
+            @click="isOpen = true"
+          />
+        </div>
+        <p class="text-sm text-gray-500">Apartments you have listed</p>
+      </template>
+      <!-- Filters -->
+      <div class="flex items-center justify-between gap-3 px-4 py-3">
+        <UInput
+          v-model="search"
+          icon="i-heroicons-magnifying-glass-20-solid"
+          placeholder="Search..."
+        />
+
+        <div class="flex items-center gap-3">
+          <USelectMenu
+            v-model="selectedOwner"
+            searchable
+            :options="listingOwners"
+            placeholder="Owner"
+            class="w-40"
+          />
+          <USelectMenu
+            v-model="selectedAvailability"
+            :options="listingAvailabilityOptions"
+            placeholder="Availability"
+            class="w-40"
           />
         </div>
       </div>
-      <UPagination
-        :max="5"
-        :page-count="5"
-        :total="100"
-        :model-value="1"
-        class="justify-center my-10"
-      />
-      <div
-        v-if="numListings < 5"
-        class="flex flex-col items-center justify-center py-6 gap-3"
-      >
-        <span class="italic text-sm text-center"
-          >You've not listed any vacant or soon to be vacant apartments!
-          <br />List apartments here.</span
+      <div>
+        <div
+          v-if="numListings === 5"
+          class="flex flex-col md:flex-row gap-4 rounded-md p-4"
         >
+          <div
+            v-for="listing in listings"
+            :key="listing.slug"
+            class="border md:w-1/3 shadow rounded-md"
+          >
+            <ApartmentList
+              :name="listing.name"
+              :image="listing.image"
+              :video="listing.video"
+              :media-type="listing.media_type"
+              :price="listing.price"
+              :location="listing.location"
+              :slug="listing.slug"
+            />
+          </div>
+        </div>
+
+        <div
+          v-if="numListings < 5"
+          class="flex flex-col items-center justify-center py-6 gap-3"
+        >
+          <span class="italic text-sm text-center"
+            >You've not listed any vacant or soon to be vacant apartments!
+            <br />List apartments here.</span
+          >
+        </div>
       </div>
-    </div>
+      <template #footer>
+        <div class="flex flex-wrap justify-between items-center">
+          <div>
+            <span class="text-sm leading-5">
+              Showing
+              <span class="font-medium">{{ pageFrom }}</span>
+              to
+              <span class="font-medium">{{ pageTo }}</span>
+              of
+              <span class="font-medium">{{ pageTotal }}</span>
+              results
+            </span>
+          </div>
+
+          <UPagination
+            v-model="page"
+            :page-count="pageCount"
+            :total="pageTotal"
+            :ui="{
+              wrapper: 'flex items-center gap-1',
+              default: {
+                activeButton: {
+                  variant: 'outline',
+                },
+              },
+            }"
+          />
+        </div>
+      </template>
+    </UCard>
+    <UModal v-model="isOpen">
+      <ApartmentForm />
+    </UModal>
   </div>
 </template>
 
@@ -57,13 +123,23 @@ definePageMeta({
   layout: 'dashboard',
 })
 
+const page = ref(1)
+const pageCount = ref(10)
+const pageTotal = ref(200) // This value should be dynamic coming from the API
+const pageFrom = computed(() => (page.value - 1) * pageCount.value + 1)
+const pageTo = computed(() =>
+  Math.min(page.value * pageCount.value, pageTotal.value),
+)
+
+const isOpen = ref(false)
+
 //   const listings: any = []
 
-const status = ['Vacant', 'Soon to be vacant', 'Occupied']
+// const status = ['Vacant', 'Soon to be vacant', 'Occupied']
 
 const numListings = ref(5)
 
-const selected = ref('')
+// const selected = ref('')
 
 const listings = [
   {
@@ -92,6 +168,41 @@ const listings = [
     price: '1,200,000',
     location: '17 Nsikak-Edet Crescent, Sunshine Homes, Lokogoma',
     slug: 'studio-apartment-in-karu',
+  },
+]
+
+const search = ref('')
+const selectedAvailability = ref<{ value: string }[]>([])
+const selectedOwner = ref<{ value: string }[]>([])
+
+const listingAvailabilityOptions = [
+  {
+    key: 'vacant',
+    label: 'Vacant',
+    value: false,
+  },
+  {
+    key: 'vacant-soon',
+    label: 'Vacant Soon',
+    value: true,
+  },
+
+  {
+    key: 'occupied',
+    label: 'Occupied',
+    value: true,
+  },
+]
+const listingOwners = [
+  {
+    key: 'ezeudu-augustine',
+    label: 'Ezeudu Augustine',
+    value: 'false',
+  },
+  {
+    key: 'seun-adeoye',
+    label: 'Seun Adeoye',
+    value: 'false',
   },
 ]
 </script>

@@ -12,7 +12,7 @@
         >
           <NuxtImg
             :src="item"
-            class="object-cover h-72 w-full rounded-t-md"
+            class="object-cover h-56 w-full rounded-t-md"
             draggable="false"
           />
         </UCarousel>
@@ -23,7 +23,7 @@
           controls
           controlslist="nodownload"
           preload="metadata"
-          class="object-cover h-72 w-full rounded-t-md"
+          class="object-cover h-56 w-full rounded-t-md"
         />
         <span
           class="absolute p-2 m-2 font-semibold bg-gray-500/70 text-white text-sm rounded-md"

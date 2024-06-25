@@ -11,7 +11,6 @@
       <USelectMenu
         v-model="selectedStatus"
         :options="chatStatus"
-        multiple
         placeholder="Status"
         class="w-40"
       />

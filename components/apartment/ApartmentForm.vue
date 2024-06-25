@@ -209,7 +209,7 @@
         />
         <UButton
           v-if="addApartmentSteps === 3"
-          label="Create"
+          label="Add"
           :loading="loading"
           @click="createApartment"
         />
