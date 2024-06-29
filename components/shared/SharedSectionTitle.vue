@@ -1,6 +1,6 @@
 <template>
   <h2
-    class="text-3xl font-['Lato'] font-bold text-center tracking-tight text-gray-700 dark:text-white sm:text-5xl"
+    class="text-4xl lg:text-5xl font-['Lato'] font-bold text-center tracking-tight text-gray-700 dark:text-white"
   >
     {{ props.text }}
   </h2>

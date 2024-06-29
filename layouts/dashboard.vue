@@ -3,7 +3,7 @@
     <UContainer>
       <div class="flex">
         <div
-          class="flex flex-col h-screen justify-between w-1/5 border-r-2 pr-6 py-12"
+          class="hidden lg:flex flex-col h-screen justify-between w-1/5 border-r-2 pr-6 py-12"
         >
           <UVerticalNavigation
             :links="links"
@@ -20,7 +20,7 @@
           </UVerticalNavigation>
           <img src="~/assets/images/logo.svg" class="w-1/2" alt="logo" />
         </div>
-        <div class="w-4/5 pl-6 pt-6">
+        <div class="lg:w-4/5 lg:pl-6 pt-6">
           <slot />
         </div>
       </div>
@@ -122,6 +122,11 @@ const users = {
         icon: 'i-heroicons-user-group',
         to: '/owners/tenants',
       },
+      {
+        label: 'Tenancies',
+        icon: 'i-heroicons-key',
+        to: '/owners/tenancies',
+      },
     ],
     [
       {
@@ -159,6 +164,11 @@ const users = {
         icon: 'i-heroicons-user-group',
         to: '/managers/tenants',
       },
+      {
+        label: 'Tenancies',
+        icon: 'i-heroicons-key',
+        to: '/managers/tenancies',
+      },
     ],
     [
       {
@@ -188,24 +198,29 @@ const users = {
       },
       {
         label: 'Renters',
-        icon: 'i-heroicons-user-group',
+        icon: 'i-heroicons-users',
         to: '/admins/renters',
       },
       {
         label: 'Agents',
-        icon: 'i-heroicons-user-group',
+        icon: 'i-heroicons-users',
         to: '/admins/agents',
       },
       {
+        label: 'Managers',
+        icon: 'i-heroicons-users',
+        to: '/admins/managers',
+      },
+      {
         label: 'Owners',
-        icon: 'i-heroicons-user-group',
+        icon: 'i-heroicons-users',
         to: '/admins/owners',
       },
     ],
   ],
 }
 
-const userType = 'owners'
+const userType = 'admins'
 
 const links = computed(() => users[userType])
 </script>

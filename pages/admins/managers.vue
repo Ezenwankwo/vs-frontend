@@ -17,9 +17,9 @@
       >
         <template #header>
           <div class="flex justify-between">
-            <DashboardTitle text="Owners" badge-label="10" show-badge />
+            <DashboardTitle text="Managers" badge-label="10" show-badge />
           </div>
-          <p class="text-sm text-gray-500">View and manage owners</p>
+          <p class="text-sm text-gray-500">View and manage managers</p>
         </template>
 
         <!-- Filters -->

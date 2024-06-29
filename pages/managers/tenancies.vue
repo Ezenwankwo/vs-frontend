@@ -17,9 +17,14 @@
       >
         <template #header>
           <div class="flex justify-between">
-            <DashboardTitle text="Owners" badge-label="10" show-badge />
+            <DashboardTitle text="Tenancies" badge-label="10" show-badge />
+            <UButton
+              icon="i-heroicons-plus-16-solid"
+              label="Add"
+              @click="isOpen = true"
+            />
           </div>
-          <p class="text-sm text-gray-500">View and manage owners</p>
+          <p class="text-sm text-gray-500">View and manage your tenancies</p>
         </template>
 
         <!-- Filters -->
@@ -32,7 +37,8 @@
 
           <USelectMenu
             v-model="selectedStatus"
-            :options="managerStatus"
+            :options="tenancyStatus"
+            multiple
             placeholder="Status"
             class="w-40"
           />
@@ -92,7 +98,7 @@
           sort-asc-icon="i-heroicons-arrow-up"
           sort-desc-icon="i-heroicons-arrow-down"
           sort-mode="manual"
-          :rows="yourAgents"
+          :rows="yourTenancies"
           class="border min-h-96 text-gray-700"
           :ui="{
             td: { base: 'max-w-[0] truncate' },
@@ -115,13 +121,19 @@
           <template #status-data="{ row }">
             <UBadge
               :label="row.status"
-              :color="row.status === 'Active' ? 'primary' : 'gray'"
+              :color="statusColor(row.status)"
               variant="subtle"
             />
           </template>
 
-          <template #actions-data>
-            <UButton icon="i-heroicons-eye" color="gray" variant="ghost" />
+          <template #actions-data="{ row }">
+            <UDropdown :items="items(row)">
+              <UButton
+                color="gray"
+                variant="ghost"
+                icon="i-heroicons-ellipsis-horizontal-20-solid"
+              />
+            </UDropdown>
           </template>
         </UTable>
         <!-- Number of rows & Pagination -->
@@ -156,6 +168,13 @@
         </template>
       </UCard>
     </div>
+    <UModal v-model="isOpen" prevent-close>
+      <TenancyForm :tenancy="tenancy" @close="handleFormClose" />
+    </UModal>
+
+    <UModal v-model="isDeleteOpen" prevent-close>
+      <TenancyDelete :tenancy="tenancy" @close="isDeleteOpen = false" />
+    </UModal>
   </div>
 </template>
 
@@ -177,6 +196,9 @@ const pageTo = computed(() =>
 const selectedRows = ref<{ id: number }[]>([])
 
 const isOpen = ref(false)
+const isDeleteOpen = ref(false)
+
+const tenancy = ref({})
 
 // Actions
 const actions = [
@@ -197,11 +219,16 @@ const actions = [
 ]
 
 // Filters
-const managerStatus = [
+const tenancyStatus = [
   {
     key: 'active',
     label: 'Active',
     value: false,
+  },
+  {
+    key: 'past-due',
+    label: 'Past Due',
+    value: true,
   },
   {
     key: 'inactive',
@@ -210,20 +237,35 @@ const managerStatus = [
   },
 ]
 
+function statusColor(status: string) {
+  if (status === 'Active') {
+    return 'primary'
+  } else if (status === 'Past Due') {
+    return 'red'
+  } else {
+    return 'gray'
+  }
+}
+
 const resetFilters = () => {
   search.value = ''
   selectedStatus.value = []
 }
 
+const handleFormClose = () => {
+  isOpen.value = false
+  tenancy.value = {}
+}
+
 const columns = [
   {
-    key: 'name',
-    label: 'Name',
+    key: 'apartment',
+    label: 'Apartment',
     sortable: true,
   },
   {
-    key: 'listings',
-    label: 'Listings',
+    key: 'tenant',
+    label: 'Tenant',
     sortable: true,
   },
   {
@@ -232,13 +274,13 @@ const columns = [
     sortable: true,
   },
   {
-    key: 'date',
-    label: 'Date Joined',
+    key: 'duration',
+    label: 'Duration',
     sortable: true,
   },
   {
     key: 'actions',
-    label: 'Details',
+    label: 'Actions',
     sortable: false,
   },
 ]
@@ -248,21 +290,48 @@ const columnsTable = computed(() =>
   columns.filter((column) => selectedColumns.value.includes(column)),
 )
 
-const yourAgents = [
+const yourTenancies = [
   {
     id: 1,
-    name: 'Kennedy Ekhator',
-    listings: 12,
+    apartment: 'Yauri Flat A1',
+    tenant: 'Kennedy Ekhator',
     status: 'Active',
-    date: '4 Jan, 17',
+    duration: '4 Jan, 17 - 15 Jan, 18',
+    startDate: '10/01/2021',
+    endDate: '11/01/2021',
   },
   {
     id: 2,
-    name: 'Felix Agyemang',
-    listings: 7,
+    apartment: 'Egbema Studio B1',
+    tenant: 'Felix Agyemang',
     status: 'Inactive',
-    date: '13 Aug, 20',
+    duration: '13 Aug, 20 - 13 Aug, 21',
+    startDate: '10/01/2022',
+    endDate: '11/01/2022',
   },
+]
+
+const items = (row: any) => [
+  [
+    {
+      label: 'Edit',
+      icon: 'i-heroicons-pencil-square-20-solid',
+      click: () => {
+        tenancy.value = row
+        isOpen.value = true
+      },
+    },
+  ],
+  [
+    {
+      label: 'Delete',
+      icon: 'i-heroicons-trash-20-solid',
+      click: () => {
+        isDeleteOpen.value = true
+        tenancy.value = row
+      },
+    },
+  ],
 ]
 
 function select(row: { id: number }) {
@@ -287,14 +356,14 @@ const searchStatus = computed(() => {
 })
 
 // Data
-const { data: agents, pending } = await useLazyAsyncData<
+const { data: tenancies, pending } = await useLazyAsyncData<
   {
     id: number
     title: string
     completed: string
   }[]
 >(
-  'agents',
+  'tenancy',
   () =>
     ($fetch as any)(
       `https://jsonplaceholder.typicode.com/todos${searchStatus.value}`,
@@ -314,5 +383,5 @@ const { data: agents, pending } = await useLazyAsyncData<
   },
 )
 
-console.log(agents.value[0].completed)
+console.log(tenancies.value[0].completed)
 </script>

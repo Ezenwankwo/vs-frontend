@@ -1,22 +1,19 @@
 <template>
-  <div class="md:h-screen pt-28 pb-12 md:pb-0">
+  <div
+    class="md:h-screen py-24 lg:py-32 bg-[url('~/assets/images/hero.jpg')] bg-cover"
+  >
     <UContainer>
-      <h1
-        class="text-5xl font-['Lato'] lg:w-2/3 font-bold text-gray-900 dark:text-white sm:text-7xl"
+      <div
+        class="flex flex-col items-center bg-gray-700/80 text-white py-8 lg:py-28 text-center rounded-md lg:w-4/5 mx-auto"
       >
-        Tired of endless searches and high agency fees?
-      </h1>
-      <p class="mt-6 text-lg text-gray-600 lg:w-3/5 dark:text-gray-300">
-        Vacant Soon offers a wide selection of listings with accurate property,
-        pricing, and neighborhood info. Plus, pay 1% as agency fee.
-      </p>
-      <UButton label="Find Apartment" size="xl" class="mt-10" to="/auth" />
-      <div class="static hidden md:block">
-        <img
-          src="~/assets/images/houses.svg"
-          class="absolute bottom-0 right-0"
-          alt=""
-        />
+        <h1 class="text-5xl lg:text-7xl font-['Lato'] tracking-tight font-bold">
+          Find and Rent Apartments
+        </h1>
+        <p class="mt-6 text-lg w-4/5 lg:w-2/3">
+          Vacant Soon offers a wide selection of listings with accurate
+          property, pricing, and neighborhood info. Plus, pay 5% as agency fee.
+        </p>
+        <UButton label="Find Apartment" size="xl" class="mt-10" to="/auth" />
       </div>
     </UContainer>
   </div>
