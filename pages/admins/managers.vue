@@ -19,7 +19,7 @@
           <div class="flex justify-between">
             <DashboardTitle text="Managers" badge-label="10" show-badge />
           </div>
-          <p class="text-sm text-gray-500">View and manage managers</p>
+          <p class="text-sm text-gray-500">View and manage property managers</p>
         </template>
 
         <!-- Filters -->
@@ -233,7 +233,7 @@ const columns = [
   },
   {
     key: 'date',
-    label: 'Date Joined',
+    label: 'Joined',
     sortable: true,
   },
   {

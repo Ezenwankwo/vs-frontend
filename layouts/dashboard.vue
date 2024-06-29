@@ -20,7 +20,7 @@
           </UVerticalNavigation>
           <img src="~/assets/images/logo.svg" class="w-1/2" alt="logo" />
         </div>
-        <div class="lg:w-4/5 lg:pl-6 pt-6">
+        <div class="lg:w-4/5 lg:pl-6 pt-6 w-full">
           <slot />
         </div>
       </div>

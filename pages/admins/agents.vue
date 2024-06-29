@@ -19,7 +19,7 @@
           <div class="flex justify-between">
             <DashboardTitle text="Agents" badge-label="10" show-badge />
           </div>
-          <p class="text-sm text-gray-500">View and manage agents</p>
+          <p class="text-sm text-gray-500">View and manage property agents</p>
         </template>
 
         <!-- Filters -->
