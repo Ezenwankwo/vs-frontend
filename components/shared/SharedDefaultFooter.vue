@@ -1,9 +1,11 @@
 <template>
   <div class="bg-gray-950/100 text-sm">
-    <UContainer class="pt-16">
+    <UContainer class="pt-12">
       <div class="flex flex-col md:flex-row mb-8">
         <div class="md:w-2/4">
-          <img src="~/assets/images/logo.svg" class="md:w-1/5" alt="logo" />
+          <NuxtLink to="/">
+            <NuxtImg src="/logo.svg" class="sm:w-2/3 md:w-1/5" alt="logo" />
+          </NuxtLink>
           <p class="text-white/70 my-4 md:w-3/5">
             Vacant Soon is an innovative apartment rental platform that aimed at
             providing renters with seamless and efficient rental experience.

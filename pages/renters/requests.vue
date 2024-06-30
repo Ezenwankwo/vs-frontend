@@ -19,13 +19,12 @@
           <div class="flex justify-between">
             <DashboardTitle text="Requests" badge-label="10" show-badge />
             <UButton
-              v-if="apartments.length < 10"
               icon="i-heroicons-plus-16-solid"
-              label="Add"
+              label="Create"
               @click="isOpen = true"
             />
           </div>
-          <p class="text-sm text-gray-500">Here are your apartment requests</p>
+          <p class="text-sm text-gray-500">Here are your requests</p>
         </template>
 
         <!-- Filters -->
@@ -34,12 +33,12 @@
             v-model="search"
             icon="i-heroicons-magnifying-glass-20-solid"
             placeholder="Search..."
+            class="w-60"
           />
 
           <USelectMenu
             v-model="selectedStatus"
             :options="requestStatus"
-            multiple
             placeholder="Status"
             class="w-40"
           />
@@ -48,7 +47,7 @@
         <!-- Header and Action buttons -->
         <div class="flex justify-between items-center w-full px-4 py-3">
           <div class="flex items-center gap-1.5">
-            <span class="text-sm leading-5">Rows per page:</span>
+            <span class="text-sm leading-5">Rows:</span>
 
             <USelect
               v-model="pageCount"
@@ -60,7 +59,7 @@
 
           <div class="flex gap-1.5 items-center">
             <UDropdown
-              v-if="selectedRows.length > 1"
+              v-if="selectedRows.length > 0"
               :items="actions"
               :ui="{ width: 'w-36' }"
             >
@@ -74,7 +73,12 @@
               </UButton>
             </UDropdown>
 
-            <USelectMenu v-model="selectedColumns" :options="columns" multiple>
+            <USelectMenu
+              v-if="selectedRows.length === 0"
+              v-model="selectedColumns"
+              :options="columns"
+              multiple
+            >
               <UButton icon="i-heroicons-view-columns" color="gray" size="xs">
                 Columns
               </UButton>
@@ -99,28 +103,18 @@
           sort-asc-icon="i-heroicons-arrow-up"
           sort-desc-icon="i-heroicons-arrow-down"
           sort-mode="manual"
-          :rows="apartments"
+          :rows="requests"
           class="border min-h-96 text-gray-700"
           :ui="{
-            td: { base: 'max-w-[0] truncate' },
             default: { checkbox: { color: 'gray' } },
           }"
           @select="select"
         >
           <template #empty-state>
-            <div class="flex flex-col items-center justify-center py-48 gap-3">
-              <Icon name="i-heroicons-circle-stack-20-solid" />
-              <span class="italic text-sm">No requests yet!</span>
-              <UButton
-                icon="i-heroicons-plus-16-solid"
-                label="Add"
-                @click="isOpen = true"
-              />
-            </div>
-          </template>
-
-          <template #matches-data="{ row }">
-            <UBadge :label="row.matches" color="primary" variant="subtle" />
+            <DashboardEmptyState
+              main-text="No requests yet"
+              @open-form="isOpen = true"
+            />
           </template>
 
           <template #status-data="{ row }">
@@ -173,9 +167,9 @@
         </template>
       </UCard>
     </div>
-    <UModal v-model="isOpen" prevent-close>
+    <USlideover v-model="isOpen" prevent-close>
       <ApartmentRequestForm :request="request" @close="handleFormClose" />
-    </UModal>
+    </USlideover>
 
     <UModal v-model="isDeleteOpen" prevent-close>
       <ApartmentRequestDelete
@@ -193,7 +187,7 @@ definePageMeta({
 
 const search = ref('')
 const sort = ref({ column: 'id', direction: 'asc' as const })
-const selectedStatus = ref<{ value: string }[]>([])
+const selectedStatus = ref('')
 const page = ref(1)
 const pageCount = ref(10)
 const pageTotal = ref(200) // This value should be dynamic coming from the API
@@ -212,16 +206,16 @@ const request = ref({})
 const actions = [
   [
     {
-      key: 'completed',
-      label: 'Completed',
-      icon: 'i-heroicons-check',
+      key: 'open',
+      label: 'Open',
+      icon: 'i-heroicons-lock-open',
     },
   ],
   [
     {
-      key: 'uncompleted',
-      label: 'In Progress',
-      icon: 'i-heroicons-arrow-path',
+      key: 'closed',
+      label: 'Closed',
+      icon: 'i-heroicons-lock-closed',
     },
   ],
 ]
@@ -229,20 +223,18 @@ const actions = [
 // Filters
 const requestStatus = [
   {
-    key: 'open',
+    id: 'open',
     label: 'Open',
-    value: false,
   },
   {
-    key: 'closed',
+    id: 'closed',
     label: 'Closed',
-    value: true,
   },
 ]
 
 const resetFilters = () => {
   search.value = ''
-  selectedStatus.value = []
+  selectedStatus.value = ''
 }
 
 const handleFormClose = () => {
@@ -253,12 +245,17 @@ const handleFormClose = () => {
 const columns = [
   {
     key: 'size',
-    label: 'Apartments',
+    label: 'Apartment',
+    sortable: true,
+  },
+  {
+    key: 'location',
+    label: 'Location',
     sortable: true,
   },
   {
     key: 'matches',
-    label: 'Matches',
+    label: 'Match',
     sortable: true,
   },
   {
@@ -282,42 +279,34 @@ const columnsTable = computed(() =>
   columns.filter((column) => selectedColumns.value.includes(column)),
 )
 
-const apartments = [
+const requests: ApartmentRequest[] = [
   {
     id: 1,
-    size: '2 bedroom apartment in Karu, Abuja',
+    size: '2 bedroom flat',
     location: 'Karu, Abuja',
-    price: '5,000,000',
+    minPrice: '1,000,000',
+    maxPrice: '2,000,000',
     move_in_date: '10/10/2022',
     amenities: ['parking', 'furnishing', 'balcony'],
     note: 'Please check the property for any suspicious activity',
-    matches: '3',
+    matches: 3,
     status: 'Open',
-    date: '10/10/2022',
+    date: '10 Oct, 22',
+    slug: '2-bedroom-in-karu-abuja',
   },
   {
     id: 2,
-    size: '3 bedroom apartment in Oshodin, Yaba',
+    size: '3 bedroom flat',
     location: 'Oshodin, Yaba',
-    price: '1,000,000',
+    minPrice: '500,000',
+    maxPrice: '1,000,000',
     move_in_date: '10/10/2024',
     amenities: ['furnishing', 'balcony'],
     note: 'Ensure the landlord does not reside in the house',
-    matches: '0',
+    matches: 0,
     status: 'Closed',
-    date: '10/10/2024',
-  },
-  {
-    id: 3,
-    size: 'Self Contained apartment in Ikpoba-hill, Benin City',
-    location: 'Ikpoba-hill, Benin City',
-    price: '800,000',
-    move_in_date: '10/10/2023',
-    amenities: ['furnishing', 'balcony', 'borehole', 'fencing'],
-    note: 'Please check the property for any suspicious activity',
-    matches: '5',
-    status: 'Open',
-    date: '10/10/2023',
+    date: '1 May, 24',
+    slug: '3-bedroom-in-oshodin-yaba',
   },
 ]
 
@@ -359,14 +348,14 @@ const searchStatus = computed(() => {
   }
 
   if (selectedStatus?.value?.length > 1) {
-    return `?completed=${selectedStatus.value[0].value}&completed=${selectedStatus.value[1].value}`
+    return `?completed=${selectedStatus.value}&completed=${selectedStatus.value}`
   }
 
-  return `?completed=${selectedStatus.value[0].value}`
+  return `?completed=${selectedStatus.value}`
 })
 
 // Data
-const { data: requests, pending } = await useLazyAsyncData<
+const { data: requestss, pending } = await useLazyAsyncData<
   {
     id: number
     title: string
@@ -393,5 +382,5 @@ const { data: requests, pending } = await useLazyAsyncData<
   },
 )
 
-console.log(requests)
+console.log(requestss)
 </script>

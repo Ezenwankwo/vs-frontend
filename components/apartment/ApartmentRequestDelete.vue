@@ -3,15 +3,22 @@
     :ui="{
       ring: '',
       divide: 'divide-y divide-gray-100 dark:divide-gray-800',
+      header: { background: 'bg-primary-100/50' },
     }"
   >
     <template #header>
       <div class="flex items-center justify-between">
-        <h3
-          class="text-base font-semibold leading-6 text-gray-700 dark:text-white"
-        >
-          Delete request
-        </h3>
+        <div class="flex items-center gap-3">
+          <Icon
+            name="i-heroicons-home-modern"
+            class="text-primary-700 text-xl"
+          />
+          <h3
+            class="text-base font-medium leading-6 text-gray-700 dark:text-white"
+          >
+            Delete Request
+          </h3>
+        </div>
         <UButton
           color="gray"
           variant="ghost"
@@ -24,7 +31,7 @@
 
     <p class="text-gray-700 text-sm">
       Are you sure you want to delete this request for
-      {{ props.request.size }} in {{ props.request.location }}?
+      <b>{{ props.request.size }} in {{ props.request.location }}</b>
     </p>
 
     <template #footer>

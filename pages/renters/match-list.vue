@@ -1,63 +1,121 @@
 <template>
   <div>
-    <div class="flex justify-between">
-      <DashboardTitle text="Match List" badge-label="10" show-badge />
-      <USelect
-        v-model="selected"
-        icon="i-heroicons-funnel"
-        :options="requests"
-        placeholder="Filter by requests"
-        class="w-1/3"
-      />
-    </div>
-    <p class="text-sm text-gray-500">Apartments that match your requests</p>
-    <div class="mt-12">
-      <div
-        v-if="requests.length < 5 || matches.length === 0"
-        class="flex flex-col md:flex-row mt-10 gap-4 rounded-md"
-      >
+    <UCard
+      class="w-full"
+      :ui="{
+        base: '',
+        ring: '',
+        divide: 'divide-y divide-gray-200 dark:divide-gray-700',
+        header: { padding: 'px-4 py-5' },
+        body: {
+          padding: '',
+          base: 'divide-y divide-gray-200 dark:divide-gray-700',
+        },
+        footer: { padding: 'p-4' },
+      }"
+    >
+      <template #header>
+        <div class="flex justify-between">
+          <DashboardTitle text="Match List" badge-label="10" show-badge />
+        </div>
+        <p class="text-sm text-gray-500">Apartments that match your requests</p>
+      </template>
+
+      <!-- Filters -->
+      <div class="flex items-center justify-between gap-3 px-4 py-3">
+        <USelectMenu
+          v-model="selectedRequest"
+          searchable
+          :options="requests"
+          icon="i-heroicons-funnel"
+          placeholder="Filter by requests"
+          value-attribute="id"
+          option-attribute="size"
+          class="w-60"
+        />
+
+        <USelectMenu
+          v-model="selectedStatus"
+          :options="availabilityStatus"
+          placeholder="Availability"
+          class="w-40"
+        />
+      </div>
+      <div class="min-h-[440px]">
         <div
-          v-for="listing in listings"
-          :key="listing.slug"
-          class="border md:w-1/3 shadow rounded-md"
+          v-if="listings.length > 0"
+          class="flex flex-col md:flex-row gap-4 rounded-md p-4"
         >
-          <ApartmentList
-            :name="listing.name"
-            :image="listing.image"
-            :video="listing.video"
-            :media-type="listing.media_type"
-            :price="listing.price"
-            :location="listing.location"
-            :slug="listing.slug"
+          <div
+            v-for="listing in listings"
+            :key="listing.slug"
+            class="border md:w-1/3 shadow rounded-md"
+          >
+            <ApartmentList
+              :name="listing.name"
+              :image="listing.image"
+              :video="listing.video"
+              :media-type="listing.media_type"
+              :price="listing.price"
+              :location="listing.location"
+              :slug="listing.slug"
+            />
+          </div>
+        </div>
+
+        <div v-if="listings.length === 0 && requests.length > 0">
+          <DashboardEmptyState
+            main-text="No apartments yet"
+            sub-text="We will notify you when we find matches"
+            :show-button="false"
+          />
+        </div>
+
+        <div v-if="requests.length === 0">
+          <DashboardEmptyState
+            main-text="No apartments yet"
+            sub-text="You need to create a request"
+            @open-form="isOpen = true"
           />
         </div>
       </div>
-      <UPagination
-        :max="5"
-        :page-count="5"
-        :total="100"
-        :model-value="1"
-        class="justify-center my-10"
-      />
-      <div
-        v-if="requests.length > 5"
-        class="flex flex-col items-center justify-center py-6 gap-3"
-      >
-        <span class="italic text-sm">You've no requests!</span>
-        <UButton
-          icon="i-heroicons-plus-16-solid"
-          label="Create request"
-          trailing
-        />
-      </div>
-      <div
-        v-if="requests.length > 5 && matches.length === 0"
-        class="flex flex-col items-center justify-center py-6 gap-3"
-      >
-        <span class="italic text-sm text-center"
-          >You've no matches yet! <br />We will notify when you do</span
-        >
-      </div>
+
+      <template #footer>
+        <div class="flex flex-wrap justify-between items-center">
+          <div>
+            <span class="text-sm leading-5">
+              Showing
+              <span class="font-medium">{{ pageFrom }}</span>
+              to
+              <span class="font-medium">{{ pageTo }}</span>
+              of
+              <span class="font-medium">{{ pageTotal }}</span>
+              results
+            </span>
+          </div>
+
+          <UPagination
+            v-model="page"
+            :page-count="pageCount"
+            :total="pageTotal"
+            :ui="{
+              wrapper: 'flex items-center gap-1',
+              default: {
+                activeButton: {
+                  variant: 'outline',
+                },
+              },
+            }"
+          />
+        </div>
+      </template>
+    </UCard>
+
+    <!-- <! Add request modal> -->
+    <div>
+      <USlideover v-model="isOpen" prevent-close>
+        <ApartmentRequestForm @close="isOpen = false" />
+      </USlideover>
     </div>
   </div>
 </template>
@@ -67,16 +125,17 @@ definePageMeta({
   layout: 'dashboard',
 })
 
-const matches: any = []
+const isOpen = ref(false)
 
-const requests = [
-  '2 bedroom apartment in karu',
-  '3 bedroom apartment in yaba',
-  '4 bedroom apartment in ibadan',
-  'Self Contained apartment in lagos',
-]
+const page = ref(1)
+const pageCount = ref(10)
+const pageTotal = ref(200) // This value should be dynamic coming from the API
+const pageFrom = computed(() => (page.value - 1) * pageCount.value + 1)
+const pageTo = computed(() =>
+  Math.min(page.value * pageCount.value, pageTotal.value),
+)
 
-const listings = [
+const listings: Apartment[] = [
   {
     name: 'Studio Apartment in Karu',
     image: ['/shortlet.png', '/office.png', '/shortlet.png'],
@@ -105,5 +164,51 @@ const listings = [
     slug: 'studio-apartment-in-karu',
   },
 ]
-const selected = ref('')
+
+const selectedStatus = ref('')
+
+const availabilityStatus = [
+  {
+    id: 'vacant',
+    label: 'Vacant',
+  },
+
+  {
+    id: 'vacant-soon',
+    label: 'Vacant Soon',
+  },
+]
+
+const requests: ApartmentRequest[] = [
+  {
+    id: 1,
+    size: '2 bedroom flat',
+    location: 'Karu, Abuja',
+    minPrice: '1,000,000',
+    maxPrice: '2,000,000',
+    move_in_date: '10/10/2022',
+    amenities: ['parking', 'furnishing', 'balcony'],
+    note: 'Please check the property for any suspicious activity',
+    matches: 3,
+    status: 'Open',
+    date: '10 Oct, 22',
+    slug: '2-bedroom-in-karu-abuja',
+  },
+  {
+    id: 2,
+    size: '3 bedroom flat',
+    location: 'Oshodin, Yaba',
+    minPrice: '500,000',
+    maxPrice: '1,000,000',
+    move_in_date: '10/10/2024',
+    amenities: ['furnishing', 'balcony'],
+    note: 'Ensure the landlord does not reside in the house',
+    matches: 0,
+    status: 'Closed',
+    date: '1 May, 24',
+    slug: '3-bedroom-in-oshodin-yaba',
+  },
+]
+
+const selectedRequest = ref('')
 </script>

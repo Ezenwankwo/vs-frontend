@@ -1,13 +1,11 @@
 <template>
   <div class="font-['Inter']">
     <div class="lg:hidden">
-      <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50 shadow">
+      <header class="backdrop-blur py-2 -mb-px sticky top-0 z-50 shadow">
         <UContainer>
           <div class="mx-auto flex items-center justify-between gap-3">
             <div class="lg:flex-1 flex items-center gap-1.5">
-              <NuxtLink to="/">
-                <NuxtImg src="/logo.svg" class="w-2/3" alt="logo" />
-              </NuxtLink>
+              <UAvatar alt="Benjamin Canac" size="lg" class="border" />
             </div>
             <div class="flex items-center justify-end lg:flex-1 gap-1.5">
               <ClientOnly>
@@ -26,9 +24,17 @@
                   <div class="w-8 h-8" />
                 </template>
               </ClientOnly>
-              <div @click="isOpen = true">
-                <UAvatar alt="Benjamin Canac" size="lg" class="border" />
-              </div>
+              <UButton
+                color="gray"
+                type="button"
+                aria-label="Open Menu"
+                @click="isOpen = true"
+              >
+                <span
+                  class="i-heroicons-bars-3-20-solid flex-shrink-0 h-5 w-5"
+                  aria-hidden="true"
+                ></span>
+              </UButton>
             </div>
           </div>
         </UContainer>
@@ -83,7 +89,7 @@
         </USlideover>
       </header>
     </div>
-    <UContainer>
+    <UContainer :ui="{ padding: 'px-0 lg:px-3 lg:px-8' }">
       <div class="flex">
         <div
           class="hidden lg:flex flex-col h-screen justify-between w-2/12 border-r-2 pr-6 py-12"
@@ -115,7 +121,7 @@
             <NuxtImg src="/logo.svg" class="w-1/2" alt="logo" />
           </NuxtLink>
         </div>
-        <div class="lg:w-10/12 lg:pl-6 pt-6 w-full">
+        <div class="lg:w-10/12 lg:pl-6 sm:pt-3 lg:pt-6 w-full">
           <slot />
         </div>
       </div>

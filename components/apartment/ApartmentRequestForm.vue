@@ -3,22 +3,30 @@
     :ui="{
       ring: '',
       divide: 'divide-y divide-gray-100 dark:divide-gray-800',
+      header: { background: 'bg-primary-100/50' },
+      footer: { base: '' },
     }"
   >
     <template #header>
       <div class="flex items-center justify-between">
-        <h3
-          v-if="request.id"
-          class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
-        >
-          Edit request
-        </h3>
-        <h3
-          v-else
-          class="text-base font-semibold leading-6 text-gray-900 dark:text-white"
-        >
-          Create request
-        </h3>
+        <div class="flex items-center gap-3">
+          <Icon
+            name="i-heroicons-home-modern"
+            class="text-primary-700 text-xl"
+          />
+          <h3
+            v-if="request.id"
+            class="text-base font-medium leading-6 text-gray-700 dark:text-white"
+          >
+            Edit Request
+          </h3>
+          <h3
+            v-else
+            class="text-base font-medium leading-6 text-gray-700 dark:text-white"
+          >
+            Create Request
+          </h3>
+        </div>
 
         <UButton
           color="gray"
@@ -34,7 +42,7 @@
       </div>
     </template>
 
-    <div class="flex flex-col space-y-4">
+    <div class="flex flex-col space-y-4 min-h-[calc(100vh-170px)]">
       <UFormGroup label="Preferred location" name="location">
         <UInputMenu
           v-model="location"
@@ -47,55 +55,66 @@
       <UFormGroup label="Apartment size" name="size">
         <USelectMenu v-model="size" :options="propertySize" />
       </UFormGroup>
-      <UFormGroup label="Price range" name="price">
-        <USelectMenu
-          v-model="price"
-          icon="i-tabler-currency-naira"
-          :options="priceRange"
-        />
-      </UFormGroup>
+      <div class="flex justify-between space-x-4">
+        <UFormGroup label="Min rent price" name="min-price" class="w-1/2">
+          <USelectMenu
+            v-model="minPrice"
+            icon="i-tabler-currency-naira"
+            :options="minPriceRange"
+          />
+        </UFormGroup>
+        <UFormGroup label="Max rent price" name="max-price" class="w-1/2">
+          <USelectMenu
+            v-model="maxPrice"
+            icon="i-tabler-currency-naira"
+            :options="maxPriceRange"
+          />
+        </UFormGroup>
+      </div>
       <UFormGroup label="Move-in date" name="move-in">
         <UInput v-model="moveIn" placeholder="dd/mm/yyyy" />
       </UFormGroup>
       <UFormGroup label="Amenities" name="amenities">
-        <div class="flex space-x-4 my-1">
+        <div class="flex space-x-4 mb-1">
+          <UCheckbox
+            v-model="fencing"
+            color="primary"
+            label="Fenced & gated"
+            class="w-1/2"
+          />
           <UCheckbox
             v-model="parking"
             color="primary"
             label="Parking spaces"
-            class="w-1/3"
+            class="w-1/2"
           />
+        </div>
+        <div class="flex space-x-4 mb-1">
           <UCheckbox
-            v-model="pets"
+            v-model="borehole"
             color="primary"
-            label="Pets allowed"
-            class="w-1/3"
+            label="Water supply"
+            class="w-1/2"
           />
           <UCheckbox
             v-model="furnishing"
             color="primary"
             label="Furnished"
-            class="w-1/3"
+            class="w-1/2"
           />
         </div>
-        <div class="flex space-x-4 my-1">
-          <UCheckbox
-            v-model="borehole"
-            color="primary"
-            label="Borehole"
-            class="w-1/3"
-          />
+        <div class="flex space-x-4 mt-1">
           <UCheckbox
             v-model="balcony"
             color="primary"
             label="Balcony"
-            class="w-1/3"
+            class="w-1/2"
           />
           <UCheckbox
-            v-model="fencing"
+            v-model="pets"
             color="primary"
-            label="Fenced & gated"
-            class="w-1/3"
+            label="Pets allowed"
+            class="w-1/2"
           />
         </div>
       </UFormGroup>
@@ -104,8 +123,18 @@
       </UFormGroup>
     </div>
     <template #footer>
-      <UButton v-if="props.request.id" label="Edit" @click="editRequest" />
-      <UButton v-else label="Create" @click="createRequest" />
+      <UButton
+        v-if="props.request.id"
+        :loading="loading"
+        label="Edit"
+        @click="editRequest"
+      />
+      <UButton
+        v-else
+        :loading="loading"
+        label="Create"
+        @click="createRequest"
+      />
     </template>
   </UCard>
 </template>
@@ -116,7 +145,8 @@ const props = defineProps({
     type: Object,
     default: () => ({
       location: '',
-      price: '',
+      minPrice: '',
+      maxPrice: '',
       moveIn: '',
       size: '',
       note: '',
@@ -130,8 +160,11 @@ const props = defineProps({
   },
 })
 
+const loading = ref(false)
+
 const location = ref('')
-const price = ref('')
+const minPrice = ref('')
+const maxPrice = ref('')
 const moveIn = ref('')
 const size = ref('')
 const note = ref('')
@@ -145,8 +178,11 @@ const fencing = ref(false)
 const currentLocation = computed(() => props.request.location || '')
 location.value = currentLocation.value
 
-const currentPrice = computed(() => props.request.price || '')
-price.value = currentPrice.value
+const currentMinPrice = computed(() => props.request.minPrice || '')
+minPrice.value = currentMinPrice.value
+
+const currentMaxPrice = computed(() => props.request.maxPrice || '')
+maxPrice.value = currentMaxPrice.value
 
 const currentMoveInDate = computed(() => props.request.move_in_date || '')
 moveIn.value = currentMoveInDate.value
@@ -189,8 +225,6 @@ note.value = currentNote.value
 
 const emit = defineEmits(['close'])
 
-const loading = ref(false)
-
 const propertySize = [
   'Self Contained',
   'Studio',
@@ -201,13 +235,24 @@ const propertySize = [
   '5 Bedroom',
 ]
 
-const priceRange = [
+const minPriceRange = [
+  '100,000',
   '200,000',
   '500,000',
   '1,000,000',
   '2,000,000',
   '3,000,000',
   '5,000,000',
+]
+
+const maxPriceRange = [
+  '200,000',
+  '500,000',
+  '1,000,000',
+  '2,000,000',
+  '3,000,000',
+  '5,000,000',
+  '10,000,000',
 ]
 
 async function search(q: string) {
@@ -224,7 +269,8 @@ function onSelect(item: any) {
 
 const resetForm = () => {
   location.value = ''
-  price.value = ''
+  minPrice.value = ''
+  maxPrice.value = ''
   moveIn.value = ''
   size.value = ''
   parking.value = false
@@ -237,10 +283,12 @@ const resetForm = () => {
 }
 
 function editRequest() {
+  loading.value = true
   // Edit request api
   const requestData = {
     location,
-    price,
+    minPrice,
+    maxPrice,
     moveIn,
     size,
     parking,
@@ -258,10 +306,12 @@ function editRequest() {
 }
 
 function createRequest() {
+  loading.value = true
   // Create request
   const requestData = {
     location,
-    price,
+    minPrice,
+    maxPrice,
     moveIn,
     size,
     parking,

@@ -17,33 +17,33 @@
       <template #header>
         <div class="flex justify-between">
           <DashboardTitle text="Listings" badge-label="10" show-badge />
-          <UButton
-            icon="i-heroicons-plus-16-solid"
-            label="Add"
-            @click="isOpen = true"
-          />
         </div>
-        <p class="text-sm text-gray-500">Apartments you have listed</p>
+        <p class="text-sm text-gray-500">Apartments that you've listed</p>
       </template>
+
       <!-- Filters -->
       <div class="flex items-center justify-between gap-3 px-4 py-3">
-        <UInput
-          v-model="search"
-          icon="i-heroicons-magnifying-glass-20-solid"
-          placeholder="Search..."
+        <USelectMenu
+          v-model="selectedRequest"
+          searchable
+          :options="requests"
+          icon="i-heroicons-funnel"
+          placeholder="Filter by requests"
+          value-attribute="id"
+          option-attribute="size"
+          class="w-60"
         />
 
         <USelectMenu
           v-model="selectedStatus"
-          :options="listingStatus"
-          multiple
-          placeholder="Status"
+          :options="availabilityStatus"
+          placeholder="Availability"
           class="w-40"
         />
       </div>
-      <div>
+      <div class="min-h-[440px]">
         <div
-          v-if="numListings === 5"
+          v-if="listings.length > 0"
           class="flex flex-col md:flex-row gap-4 rounded-md p-4"
         >
           <div
@@ -63,16 +63,23 @@
           </div>
         </div>
 
-        <div
-          v-if="numListings < 5"
-          class="flex flex-col items-center justify-center py-6 gap-3"
-        >
-          <span class="italic text-sm text-center"
-            >You've not listed any vacant or soon to be vacant apartments!
-            <br />List apartments here.</span
-          >
+        <div v-if="listings.length === 0 && requests.length > 0">
+          <DashboardEmptyState
+            main-text="No apartments yet"
+            sub-text="We will notify you when we find matches"
+            :show-button="false"
+          />
+        </div>
+
+        <div v-if="requests.length === 0">
+          <DashboardEmptyState
+            main-text="No apartments yet"
+            sub-text="You need to create a request"
+            @open-form="isOpen = true"
+          />
         </div>
       </div>
+
       <template #footer>
         <div class="flex flex-wrap justify-between items-center">
           <div>
@@ -104,11 +111,11 @@
       </template>
     </UCard>
 
-    <!-- <! Add apartment modal> -->
+    <!-- <! Add request modal> -->
     <div>
-      <UModal v-model="isOpen">
-        <ApartmentForm />
-      </UModal>
+      <USlideover v-model="isOpen" prevent-close>
+        <ApartmentRequestForm @close="isOpen = false" />
+      </USlideover>
     </div>
   </div>
 </template>
@@ -128,15 +135,7 @@ const pageTo = computed(() =>
   Math.min(page.value * pageCount.value, pageTotal.value),
 )
 
-//   const listings: any = []
-
-// const status = ['Vacant', 'Soon to be vacant', 'Occupied']
-
-const numListings = ref(5)
-
-// const selected = ref('')
-
-const listings = [
+const listings: Apartment[] = [
   {
     name: 'Studio Apartment in Karu',
     image: ['/shortlet.png', '/office.png', '/shortlet.png'],
@@ -166,25 +165,50 @@ const listings = [
   },
 ]
 
-const search = ref('')
-const selectedStatus = ref<{ value: string }[]>([])
+const selectedStatus = ref('')
 
-const listingStatus = [
+const availabilityStatus = [
   {
-    key: 'vacant',
+    id: 'vacant',
     label: 'Vacant',
-    value: false,
-  },
-  {
-    key: 'soon-to-be-vacant',
-    label: 'Soon to be vacant',
-    value: true,
   },
 
   {
-    key: 'occupied',
-    label: 'Occupied',
-    value: true,
+    id: 'vacant-soon',
+    label: 'Vacant Soon',
   },
 ]
+
+const requests: ApartmentRequest[] = [
+  {
+    id: 1,
+    size: '2 bedroom flat',
+    location: 'Karu, Abuja',
+    minPrice: '1,000,000',
+    maxPrice: '2,000,000',
+    move_in_date: '10/10/2022',
+    amenities: ['parking', 'furnishing', 'balcony'],
+    note: 'Please check the property for any suspicious activity',
+    matches: 3,
+    status: 'Open',
+    date: '10 Oct, 22',
+    slug: '2-bedroom-in-karu-abuja',
+  },
+  {
+    id: 2,
+    size: '3 bedroom flat',
+    location: 'Oshodin, Yaba',
+    minPrice: '500,000',
+    maxPrice: '1,000,000',
+    move_in_date: '10/10/2024',
+    amenities: ['furnishing', 'balcony'],
+    note: 'Ensure the landlord does not reside in the house',
+    matches: 0,
+    status: 'Closed',
+    date: '1 May, 24',
+    slug: '3-bedroom-in-oshodin-yaba',
+  },
+]
+
+const selectedRequest = ref('')
 </script>

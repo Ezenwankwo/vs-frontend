@@ -1,6 +1,6 @@
 <template>
   <div>
-    <header class="backdrop-blur py-1 -mb-px sticky top-0 z-50">
+    <header class="backdrop-blur py-2 -mb-px sticky top-0 z-50">
       <UContainer>
         <div class="mx-auto flex items-center justify-between gap-3">
           <div class="lg:flex-1 flex items-center gap-1.5">
@@ -9,7 +9,7 @@
               class="router-link-active router-link-exact-active flex-shrink-0 font-bold text-xl text-gray-900 dark:text-white flex items-end gap-1.5"
               aria-label="Logo"
             >
-              <img src="~/assets/images/logo.svg" alt="logo" />
+              <NuxtImg src="/logo.svg" alt="logo" class="w-2/3" />
             </ULink>
           </div>
           <ul
@@ -60,7 +60,6 @@
               v-if="showMobileMenu === false"
               color="gray"
               type="button"
-              class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 p-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center lg:hidden"
               aria-label="Open Menu"
               @click="showMobileMenu = !showMobileMenu"
             >
@@ -73,7 +72,6 @@
               v-else
               color="gray"
               type="button"
-              class="focus:outline-none focus-visible:outline-0 disabled:cursor-not-allowed disabled:opacity-75 flex-shrink-0 font-medium rounded-full text-sm gap-x-2 p-2 text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-gray-800 focus-visible:ring-inset focus-visible:ring-2 focus-visible:ring-primary-500 dark:focus-visible:ring-primary-400 inline-flex items-center lg:hidden"
               aria-label="Close Menu"
               @click="showMobileMenu = !showMobileMenu"
             >
