@@ -21,7 +21,6 @@
             <UButton
               v-if="apartments.length < 10"
               icon="i-heroicons-plus-16-solid"
-              variant="outline"
               label="Add"
               @click="isOpen = true"
             />
